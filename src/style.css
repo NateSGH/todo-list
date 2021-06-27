@@ -1,6 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Exo:wght@100;900&display=swap");
 
 :root {
+  --header-bg-color: #ad4328;
+  --sections-bg-color: rgba(182, 86, 65, 0.5);
+  --btn-bg-color: #f7f1ed; /*#1d3124 #e59560*/
+  --font-color: #fff;
 }
 
 body {
@@ -13,24 +17,68 @@ body {
   grid-template-areas:
     "header header"
     "sections content";
+  overflow: hidden;
+  margin: 0;
 }
 
 header {
   grid-area: header;
   display: grid;
   grid-template-columns: 1fr 1fr;
+  background-color: var(--header-bg-color);
+  align-items: center;
 }
 
 h1 {
-  color: red;
+  color: var(--font-color);
+  font-size: 35px;
+  /* text-shadow: 2px 2px #fff; */
 }
 
 .sections-panel {
   grid-area: sections;
   display: flex;
   flex-direction: column;
+  background-color: var(--sections-bg-color);
+}
+button {
+  font-family: "Exo", sans-serif;
+  font-size: 25px;
+  font-weight: 500;
+  text-shadow: 1px 1px 2px #000;
+  border: none;
+  background: none;
+  cursor: pointer;
+  margin: 20px;
+  padding: 0;
 }
 
 .main-content {
   grid-area: content;
 }
+
+#add-task {
+  background-color: var(--btn-bg-color);
+  color: #fff;
+  justify-self: end;
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+}
+
+/* 
+  color: rgba(25, 29, 38, 1);
+}
+.Under-the-sheets.-Environments-created-with-fabric.-2-rgba {
+  color: rgba(216, 191, 145, 1);
+}
+.Under-the-sheets.-Environments-created-with-fabric.-3-rgba {
+  color: rgba(216, 208, 192, 1);
+}
+.Under-the-sheets.-Environments-created-with-fabric.-4-rgba {
+  color: rgba(191, 160, 122, 1);
+}
+.Under-the-sheets.-Environments-created-with-fabric.-5-rgba {
+  color: rgba(114, 92, 73, 1);
+} */

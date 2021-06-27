@@ -1,0 +1,36 @@
+@import url("https://fonts.googleapis.com/css2?family=Exo:wght@100;900&display=swap");
+
+:root {
+}
+
+body {
+  font-family: "Exo", sans-serif;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 30vw 70vw;
+  grid-template-rows: 7vh 93vh;
+  grid-template-areas:
+    "header header"
+    "sections content";
+}
+
+header {
+  grid-area: header;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+h1 {
+  color: red;
+}
+
+.sections-panel {
+  grid-area: sections;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  grid-area: content;
+}

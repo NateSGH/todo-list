@@ -5,6 +5,8 @@
   --sections-bg-color: rgba(108, 138, 136, 0.2);
   --btn-bg-color: #ffd6ba;
   --font-color: #fff;
+  --header-sections-left-margin: 30px;
+  --sections-icons-color: #555b6e;
 }
 
 body {
@@ -33,7 +35,7 @@ h1 {
   color: var(--font-color);
   font-size: 38px;
   font-weight: lighter;
-  margin: 0 0 0 50px;
+  margin: 0 0 0 var(--header-sections-left-margin);
 }
 
 .sections-panel {
@@ -42,6 +44,7 @@ h1 {
   flex-direction: column;
   background-color: var(--sections-bg-color);
 }
+
 button {
   font-family: inherit;
   font-size: 25px;
@@ -49,8 +52,23 @@ button {
   border: none;
   background: none;
   cursor: pointer;
-  margin: 20px;
-  padding: 0;
+  padding: 25px;
+  text-align: left;
+}
+
+.section {
+  padding-left: var(--header-sections-left-margin);
+}
+
+.fa-inbox,
+.fa-calendar-day,
+.fa-calendar-week,
+.fa-project-diagram {
+  color: var(--sections-icons-color);
+}
+
+#projects {
+  border-top: 2px solid var(--sections-icons-color);
 }
 
 .main-content {
@@ -71,5 +89,13 @@ button {
 }
 
 #add-project {
-  font-size: 15px;
+  font-size: 14px;
+  text-align: right;
+  font-weight: bolder;
+  width: fit-content;
+  height: fit-content;
+  align-self: flex-end;
+  padding: 10px;
+  margin: 5px 20px 0 0;
+  border: 1px solid var(--sections-icons-color);
 }

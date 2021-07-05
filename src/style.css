@@ -73,6 +73,19 @@ button {
 
 .main-content {
   grid-area: content;
+  display: flex;
+  flex-direction: column;
+}
+
+.todo-content {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto auto;
+  margin: 15px;
+  align-items: center;
+}
+
+.todo-icon {
+  margin: 5px;
 }
 
 #add-task {

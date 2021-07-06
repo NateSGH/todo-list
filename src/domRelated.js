@@ -1,6 +1,7 @@
 // DOM module (module pattern)
 const dom = (() => {
   const pageContent = document.querySelector(".main-content");
+  const addTaskBtn = document.getElementById("add-task");
   // create todo
   function addTodoToPage(object) {
     const todo = document.createElement("div");
@@ -70,6 +71,26 @@ const dom = (() => {
         break;
     }
   }
+
+  function createAddTodoForm(params) {
+    const formContainer = document.createElement("div");
+
+    formContainer.innerHTML = `        
+    <form>
+      <h3>Add New Task</h3>
+      <label for="title">Title</label>
+      <input type="text" id="title" placeholder="Enter todo title">
+      <label for="description">Description</label>
+      <input type="text" id="description"
+          placeholder="Enter todo description">
+      <label for="due_date">Due Date</label>
+      <input type="date" id="due_date" placeholder="Enter the title">
+    </form>`;
+  }
+
+  addTaskBtn.addEventListener("click", () => {
+    console.log("Add task btn clicked");
+  });
 
   return {
     addTodoToPage,

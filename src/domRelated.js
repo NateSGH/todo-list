@@ -74,22 +74,74 @@ const dom = (() => {
 
   function createAddTodoForm(params) {
     const formContainer = document.createElement("div");
+    formContainer.classList.add("form-container");
 
-    formContainer.innerHTML = `        
-    <form>
+    formContainer.innerHTML = `
+    <div class="form-wrapper">
+      <button id="close-form"><i class="fas fa-times"></i></button>
       <h3>Add New Task</h3>
-      <label for="title">Title</label>
-      <input type="text" id="title" placeholder="Enter todo title">
-      <label for="description">Description</label>
-      <input type="text" id="description"
-          placeholder="Enter todo description">
-      <label for="due_date">Due Date</label>
-      <input type="date" id="due_date" placeholder="Enter the title">
-    </form>`;
+      <form id="add-task-form">
+        <div class="form-control form-title">
+          <label for="title">Title</label>
+          <input type="text" name="title" id="title"
+              placeholder="Enter todo title">
+        </div>
+
+        <div class="form-control form-description">
+          <label for="description">Description</label>
+          <textarea name="description" id="description" rows="5" 
+            placeholder="Enter todo description"></textarea>
+        </div>
+
+        <div class="form-control form-due_date">
+          <label for="due_date">Due Date</label>
+          <input type="date" name="due_date" id="due_date"
+              placeholder="Enter the title">
+        </div>
+
+        <div class="form-control form-priority">
+          <label for="priority">Priority</label>
+          <select name="priority" id="priority">
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+          </select>
+        </div>
+
+        <div class="form-control form-project">
+          <label for="project">Project</label>
+          <select name="project" id="project">
+              <option value="test">Low</option>
+          </select>
+        </div>
+
+          <input type="submit" value="Submit" id="form-submit">
+      </form>
+    </div>`;
+    formContainer.style.animation = "fade-in 0.5s";
+    document.querySelector("body").appendChild(formContainer);
+  }
+
+  function removeForm() {
+    const formContainer = document.querySelector(".form-container");
+    formContainer.style.animation = "fade-out 0.5s";
+    setTimeout(() => formContainer.remove(), 450);
   }
 
   addTaskBtn.addEventListener("click", () => {
-    console.log("Add task btn clicked");
+    if (!document.getElementById("add-task-form")) {
+      createAddTodoForm();
+      const closeFormBtn = document.getElementById("close-form");
+      closeFormBtn.addEventListener("click", () => {
+        removeForm();
+      });
+    }
+  });
+
+  window.addEventListener("click", (event) => {
+    if (event.target == document.querySelector(".form-container")) {
+      removeForm();
+    }
   });
 
   return {

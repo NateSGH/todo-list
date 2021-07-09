@@ -1,7 +1,10 @@
+import { format } from "date-fns";
+import parseISO from "date-fns/parseISO";
+
 // DOM module (module pattern)
 const dom = (() => {
   const pageContent = document.querySelector(".main-content");
-  const addTaskBtn = document.getElementById("add-task");
+
   // create todo
   function addTodoToPage(object) {
     const todo = document.createElement("div");
@@ -84,19 +87,19 @@ const dom = (() => {
         <div class="form-control form-title">
           <label for="title">Title</label>
           <input type="text" name="title" id="title"
-              placeholder="Enter todo title">
+              placeholder="Enter todo title" required>
         </div>
 
         <div class="form-control form-description">
           <label for="description">Description</label>
           <textarea name="description" id="description" rows="5" 
-            placeholder="Enter todo description"></textarea>
+            placeholder="Enter todo description" required></textarea>
         </div>
 
-        <div class="form-control form-due_date">
-          <label for="due_date">Due Date</label>
-          <input type="date" name="due_date" id="due_date"
-              placeholder="Enter the title">
+        <div class="form-control form-due-date">
+          <label for="due-date">Due Date</label>
+          <input type="date" name="duedate" id="due-date"
+              placeholder="Enter the title" required>
         </div>
 
         <div class="form-control form-priority">
@@ -111,7 +114,7 @@ const dom = (() => {
         <div class="form-control form-project">
           <label for="project">Project</label>
           <select name="project" id="project">
-              <option value="test">Low</option>
+              <option value="inbox">Inbox</option>
           </select>
         </div>
 
@@ -122,21 +125,53 @@ const dom = (() => {
     document.querySelector("body").appendChild(formContainer);
   }
 
-  function removeForm() {
-    const formContainer = document.querySelector(".form-container");
-    formContainer.style.animation = "fade-out 0.5s";
-    setTimeout(() => formContainer.remove(), 450);
-  }
+  function formHandler(formHandler, todoArr) {
+    const addTaskBtn = document.getElementById("add-task");
+    addTaskBtn.addEventListener("click", () => {
+      if (!document.getElementById("add-task-form")) {
+        dom.createAddTodoForm();
+        closeFormHandler();
+        submitFormHandler();
+      }
+    });
 
-  addTaskBtn.addEventListener("click", () => {
-    if (!document.getElementById("add-task-form")) {
-      createAddTodoForm();
+    function closeFormHandler() {
       const closeFormBtn = document.getElementById("close-form");
       closeFormBtn.addEventListener("click", () => {
         removeForm();
       });
     }
-  });
+
+    function submitFormHandler() {
+      const newTodoForm = document.getElementById("add-task-form");
+
+      newTodoForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const todoObj = {
+          title: newTodoForm.elements.title.value,
+          description: newTodoForm.elements.description.value,
+          dueDate: format(
+            parseISO(newTodoForm.elements.duedate.value),
+            "dd-MM-yyyy"
+          ),
+          priority: newTodoForm.elements.priority.value,
+          project: newTodoForm.elements.project.value,
+        };
+
+        if (formHandler(todoObj, todoArr)) {
+          removeForm();
+          addTodoToPage(todoArr[todoArr.length - 1]);
+        }
+      });
+    }
+  }
+
+  function removeForm() {
+    const formContainer = document.querySelector(".form-container");
+    formContainer.style.animation = "fade-out 0.5s";
+    setTimeout(() => formContainer.remove(), 450);
+  }
 
   window.addEventListener("click", (event) => {
     if (event.target == document.querySelector(".form-container")) {
@@ -147,6 +182,8 @@ const dom = (() => {
   return {
     addTodoToPage,
     setPriorityOnPage,
+    createAddTodoForm,
+    formHandler,
   };
 })();
 

@@ -211,7 +211,7 @@ textarea {
   grid-area: description;
 }
 
-.form-due_date {
+.form-due-date {
   grid-area: duedate;
 }
 
@@ -225,7 +225,7 @@ textarea {
 
 .form-title,
 .form-description,
-.form-due_date,
+.form-due-date,
 .form-priority,
 .form-project {
   display: flex;

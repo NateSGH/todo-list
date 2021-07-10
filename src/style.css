@@ -92,6 +92,11 @@ button {
   margin: 5px;
 }
 
+.todo-title,
+.todo-icon {
+  cursor: pointer;
+}
+
 #add-task {
   color: #fff;
   justify-self: end;

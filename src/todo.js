@@ -1,35 +1,46 @@
 import { format } from "date-fns";
 
-const todoFactory = (title, description, dueDate, priority, project) => {
-  const todoObj = {
-    title,
-    description,
-    dueDate,
-    priority,
-    project,
-  };
+let todoArr = [];
 
+const todoFactory = (title, description, dueDate, priority, project) => {
+  let completed = false;
+  const idNum = idCounter();
+
+  const getIdNum = () => idNum;
   const getTitle = () => title;
   const getDescription = () => description;
   const getDueDate = () => dueDate;
   const getPriority = () => priority;
   const getProject = () => project;
+  const getCompletion = () => completed;
+
+  const getProperties = () => ({
+    idNum,
+    title,
+    description,
+    dueDate,
+    priority,
+    project,
+    completed,
+  });
 
   const setTitle = (newTitle) => (title = newTitle);
   const setDescription = (newDescription) => (description = newDescription);
   const setDueDate = (newDueDate) => (dueDate = newDueDate);
   const setPriority = (newPriority) => (priority = newPriority);
   const setProject = (newProject) => (project = newProject);
-
-  const getProperties = () => todoObj;
+  const setCompletion = (newComplited) => (completed = newComplited);
 
   return {
+    getIdNum,
     getTitle,
     getDescription,
     getDueDate,
     getPriority,
     getProject,
+    getCompletion,
     getProperties,
+    setCompletion,
   };
 };
 
@@ -47,7 +58,7 @@ function addNewTodoByUser(formTodoObj, todoArr) {
   }
   // if not exists add to array
   const todoItem = createTodoObjWithFormInfo(formTodoObj);
-  addTodoToArr(todoItem, todoArr);
+  addTodoToArr(todoItem);
   console.log(formTodoObj);
   return true;
 }
@@ -62,10 +73,42 @@ function createTodoObjWithFormInfo(formTodoObj) {
   );
 }
 
-function addTodoToArr(todoObj, todoArr) {
+function addTodoToArr(todoObj) {
   todoArr.push(todoObj);
   console.log(todoArr);
   console.log(todoArr[0].getTitle());
 }
 
-export { todoFactory, addNewTodoByUser };
+function setTaskCompletionById(idNum) {
+  console.log({ idNum }, typeof idNum);
+  console.log(todoArr[1].getProperties());
+  const index = todoArr.findIndex(findById);
+  console.log(index);
+  const currentCompletion = todoArr[index].getCompletion();
+
+  todoArr[index].setCompletion(!currentCompletion);
+  console.log(todoArr[index].getProperties());
+
+  function findById(todo) {
+    console.log(todo.getIdNum(), typeof todo.getIdNum());
+    return todo.getIdNum() === idNum;
+  }
+}
+
+const counterCreator = () => {
+  let count = 0;
+  return () => {
+    count++;
+    return count;
+  };
+};
+
+const idCounter = counterCreator();
+
+export {
+  todoArr,
+  todoFactory,
+  addNewTodoByUser,
+  idCounter,
+  setTaskCompletionById,
+};

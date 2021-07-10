@@ -4,15 +4,21 @@ import parseISO from "date-fns/parseISO";
 // DOM module (module pattern)
 const dom = (() => {
   const pageContent = document.querySelector(".main-content");
+  let funcOnClick = "";
 
   // create todo
   function addTodoToPage(object) {
     const todo = document.createElement("div");
     todo.classList.add("todo-content");
+    todo.dataset.id = object.getIdNum();
 
     const checkbox = document.createElement("i");
     checkbox.classList.add("far");
-    checkbox.classList.add("fa-square");
+    if (object.getCompletion() === false) {
+      checkbox.classList.add("fa-square");
+    } else {
+      checkbox.classList.add("fa-check-square");
+    }
     checkbox.classList.add("checkbox");
     checkbox.classList.add("todo-icon");
 
@@ -43,6 +49,28 @@ const dom = (() => {
     todo.appendChild(edit);
     todo.appendChild(deleteBtn);
     pageContent.appendChild(todo);
+
+    checkbox.addEventListener("click", (event) => {
+      toggleTaskCompletion(checkbox, title);
+      console.log(event.target.parentNode.dataset.id);
+      funcOnClick(Number(event.target.parentNode.dataset.id));
+    });
+  }
+  //todoComletitionHandler
+  function toggleTaskCompletion(checkboxEl, titleEl) {
+    // const checkbox = document.querySelector("checkbox");
+    checkboxEl.classList.toggle("fa-square");
+    checkboxEl.classList.toggle("fa-check-square");
+
+    if (checkboxEl.classList.contains("fa-check-square")) {
+      titleEl.style.textDecoration = "line-through";
+    } else {
+      titleEl.style.textDecoration = "none";
+    }
+  }
+
+  function addTaskCompletionListener(functionOnClick) {
+    funcOnClick = functionOnClick;
   }
 
   // create project
@@ -125,13 +153,13 @@ const dom = (() => {
     document.querySelector("body").appendChild(formContainer);
   }
 
-  function formHandler(formHandler, todoArr) {
+  function formHandler(todoFormHandler, todoArr) {
     const addTaskBtn = document.getElementById("add-task");
     addTaskBtn.addEventListener("click", () => {
       if (!document.getElementById("add-task-form")) {
         dom.createAddTodoForm();
         closeFormHandler();
-        submitFormHandler();
+        submitFormHandler(todoFormHandler);
       }
     });
 
@@ -142,7 +170,7 @@ const dom = (() => {
       });
     }
 
-    function submitFormHandler() {
+    function submitFormHandler(todoFormHandler) {
       const newTodoForm = document.getElementById("add-task-form");
 
       newTodoForm.addEventListener("submit", (event) => {
@@ -159,7 +187,7 @@ const dom = (() => {
           project: newTodoForm.elements.project.value,
         };
 
-        if (formHandler(todoObj, todoArr)) {
+        if (todoFormHandler(todoObj, todoArr)) {
           removeForm();
           addTodoToPage(todoArr[todoArr.length - 1]);
         }
@@ -184,6 +212,7 @@ const dom = (() => {
     setPriorityOnPage,
     createAddTodoForm,
     formHandler,
+    addTaskCompletionListener,
   };
 })();
 

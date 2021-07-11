@@ -71,8 +71,10 @@ button {
   color: var(--sections-icons-color);
 }
 
-#projects {
-  border-top: 2px solid var(--sections-icons-color);
+.project-container {
+  border-top: 1px solid var(--sections-icons-color);
+  display: flex;
+  flex-direction: column;
 }
 
 .main-content {
@@ -89,12 +91,16 @@ button {
 }
 
 .todo-icon {
-  margin: 5px;
+  margin: 10px;
 }
 
 .todo-title,
 .todo-icon {
   cursor: pointer;
+}
+
+.todo-title {
+  margin-left: 5px;
 }
 
 #add-task {
@@ -122,7 +128,8 @@ button {
   border: 1px solid var(--sections-icons-color);
 }
 
-.form-container {
+.form-container,
+.details-container {
   position: fixed;
   z-index: 1;
   left: 0;
@@ -168,17 +175,20 @@ button {
   margin: 5px var(--form-margin) 0 0;
 }
 
-#close-form i {
+#close-form i,
+#close-details i {
   font-size: 20px;
   color: var(--font-dark);
   cursor: pointer;
 }
 
-#close-form i:hover {
+#close-form i:hover,
+#close-details i:hover {
   color: var(--btn-hover-color);
 }
 
-#close-form i:active {
+#close-form i:active,
+#close-details i:active {
   color: var(--btn-hover-color);
   transform: scale(0.95);
 }
@@ -201,7 +211,6 @@ button {
   font-weight: bold;
   margin-bottom: 5px;
 }
-
 input,
 select,
 textarea {
@@ -260,6 +269,33 @@ textarea {
 #form-submit:active {
   background-color: var(--btn-hover-color);
   transform: scale(0.95);
+}
+
+.details-wrapper {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(6, 1fr);
+  background-color: rgba(255, 255, 255, 0.8);
+  position: fixed;
+  border: 2px solid var(--header-bg-color);
+  border-radius: 8px;
+  box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.2);
+  width: 50vw;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+#close-details {
+  justify-self: end;
+  align-self: start;
+  padding: 0;
+  margin: 5px var(--form-margin) 0 0;
+}
+
+.details-wrapper h3,
+p {
+  margin: 0 0 0 10px;
 }
 
 @keyframes fade-in {

@@ -4,7 +4,8 @@ import parseISO from "date-fns/parseISO";
 // DOM module (module pattern)
 const dom = (() => {
   const pageContent = document.querySelector(".main-content");
-  let funcOnClick = "";
+  let todoTaskCompletionFuncOnClick = "";
+  let todoGetTaskObjByIdFuncOnClick = "";
 
   // create todo
   function addTodoToPage(object) {
@@ -53,12 +54,19 @@ const dom = (() => {
     checkbox.addEventListener("click", (event) => {
       toggleTaskCompletion(checkbox, title);
       console.log(event.target.parentNode.dataset.id);
-      funcOnClick(Number(event.target.parentNode.dataset.id));
+      todoTaskCompletionFuncOnClick(Number(event.target.parentNode.dataset.id));
+    });
+
+    title.addEventListener("click", (event) => {
+      const todoObjById = todoGetTaskObjByIdFuncOnClick(
+        Number(event.target.parentNode.dataset.id)
+      );
+
+      showTaskDetails(todoObjById);
     });
   }
-  //todoComletitionHandler
+
   function toggleTaskCompletion(checkboxEl, titleEl) {
-    // const checkbox = document.querySelector("checkbox");
     checkboxEl.classList.toggle("fa-square");
     checkboxEl.classList.toggle("fa-check-square");
 
@@ -70,7 +78,43 @@ const dom = (() => {
   }
 
   function addTaskCompletionListener(functionOnClick) {
-    funcOnClick = functionOnClick;
+    todoTaskCompletionFuncOnClick = functionOnClick;
+  }
+
+  function addTaskDetailsListener(functionOnClick) {
+    todoGetTaskObjByIdFuncOnClick = functionOnClick;
+  }
+
+  function showTaskDetails(object) {
+    const todoDetailsContainer = document.createElement("div");
+    todoDetailsContainer.classList.add("details-container");
+
+    todoDetailsContainer.innerHTML = `
+    <div class="details-wrapper">
+      <button id="close-details"><i class="fas fa-times"></i></button>
+      <h3>${object.getTitle()}</h3>
+      <p id="details-description">Description: ${object.getDescription()}</p>
+      <p id="details-date">Due Date: ${object.getDueDate()}</p>
+      <p id="details-priority">Priority: ${object.getPriority()}</p>
+      <p id="details-project">Project: ${object.getProject()}</p>
+    </div>`;
+    todoDetailsContainer.style.animation = "fade-in 0.5s";
+    document.querySelector("body").appendChild(todoDetailsContainer);
+
+    closeDetailsOnBtn();
+  }
+
+  function removeDetails() {
+    const detailsContainer = document.querySelector(".details-container");
+    detailsContainer.style.animation = "fade-out 0.5s";
+    setTimeout(() => detailsContainer.remove(), 450);
+  }
+
+  function closeDetailsOnBtn() {
+    const closeDetailsBtn = document.getElementById("close-details");
+    closeDetailsBtn.addEventListener("click", () => {
+      removeDetails();
+    });
   }
 
   // create project
@@ -204,6 +248,8 @@ const dom = (() => {
   window.addEventListener("click", (event) => {
     if (event.target == document.querySelector(".form-container")) {
       removeForm();
+    } else if (event.target == document.querySelector(".details-container")) {
+      removeDetails();
     }
   });
 
@@ -213,6 +259,7 @@ const dom = (() => {
     createAddTodoForm,
     formHandler,
     addTaskCompletionListener,
+    addTaskDetailsListener,
   };
 })();
 

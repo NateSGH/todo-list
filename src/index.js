@@ -4,6 +4,7 @@ import {
   todoFactory,
   addNewTodoByUser,
   setTaskCompletionById,
+  getTodoObjectById,
 } from "./todo.js";
 import { dom } from "./domRelated.js";
 
@@ -16,7 +17,6 @@ todoArr.push(testTodo);
 todoArr.push(test1Todo);
 todoArr.push(test2Todo);
 todoArr.push(test3Todo);
-// console.log(testTodo.getProperties());
 
 dom.addTodoToPage(testTodo);
 dom.addTodoToPage(test1Todo);
@@ -24,5 +24,5 @@ dom.addTodoToPage(test2Todo);
 dom.addTodoToPage(test3Todo);
 
 dom.formHandler(addNewTodoByUser, todoArr);
-
 dom.addTaskCompletionListener(setTaskCompletionById);
+dom.addTaskDetailsListener(getTodoObjectById);

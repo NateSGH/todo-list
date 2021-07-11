@@ -79,20 +79,28 @@ function addTodoToArr(todoObj) {
   console.log(todoArr[0].getTitle());
 }
 
-function setTaskCompletionById(idNum) {
-  console.log({ idNum }, typeof idNum);
-  console.log(todoArr[1].getProperties());
-  const index = todoArr.findIndex(findById);
-  console.log(index);
-  const currentCompletion = todoArr[index].getCompletion();
-
-  todoArr[index].setCompletion(!currentCompletion);
-  console.log(todoArr[index].getProperties());
-
+function getTodoIndexById(idNum) {
   function findById(todo) {
-    console.log(todo.getIdNum(), typeof todo.getIdNum());
     return todo.getIdNum() === idNum;
   }
+
+  return todoArr.findIndex(findById);
+}
+
+function setTaskCompletionById(idNum) {
+  const index = getTodoIndexById(idNum);
+  if (index) {
+    const currentCompletion = todoArr[index].getCompletion();
+
+    todoArr[index].setCompletion(!currentCompletion);
+    console.log(todoArr[index].getProperties());
+  }
+}
+
+function getTodoObjectById(idNum) {
+  const index = getTodoIndexById(idNum);
+
+  return todoArr[index];
 }
 
 const counterCreator = () => {
@@ -111,4 +119,5 @@ export {
   addNewTodoByUser,
   idCounter,
   setTaskCompletionById,
+  getTodoObjectById,
 };

@@ -64,6 +64,14 @@ const dom = (() => {
 
       showTaskDetails(todoObjById);
     });
+
+    edit.addEventListener("click", (event) => {
+      const todoObjById = todoGetTaskObjByIdFuncOnClick(
+        Number(event.target.parentNode.dataset.id)
+      );
+
+      addEditFormOnPage(todoObjById);
+    });
   }
 
   function toggleTaskCompletion(checkboxEl, titleEl) {
@@ -117,6 +125,34 @@ const dom = (() => {
     });
   }
 
+  function editTask() {}
+
+  function addEditFormOnPage(object) {
+    createTodoForm();
+    setEditFormInputsToObjectVals(object);
+  }
+
+  function setEditFormInputsToObjectVals(object) {
+    const formH3 = document.querySelector(".form-h3");
+    formH3.innerText = "Edit Task";
+
+    const titleInput = document.getElementById("title");
+    titleInput.value = `${object.getTitle()}`;
+
+    const descriptionInput = document.getElementById("description");
+    descriptionInput.value = `${object.getDescription()}`;
+
+    // Fix if - change date back to 2021-07-11
+    const dueDateInput = document.getElementById("due-date");
+    dueDateInput.value = `${object.getDueDate()}`;
+
+    const priorityInput = document.getElementById("priority");
+    priorityInput.value = `${object.getPriority()}`;
+
+    const projectInput = document.getElementById("project");
+    projectInput.value = `${object.getProject()}`;
+  }
+
   // create project
   function addProjectToPage(object) {}
 
@@ -147,14 +183,14 @@ const dom = (() => {
     }
   }
 
-  function createAddTodoForm(params) {
+  function createTodoForm() {
     const formContainer = document.createElement("div");
     formContainer.classList.add("form-container");
 
     formContainer.innerHTML = `
     <div class="form-wrapper">
       <button id="close-form"><i class="fas fa-times"></i></button>
-      <h3>Add New Task</h3>
+      <h3 class="form-h3">Add New Task</h3>
       <form id="add-task-form">
         <div class="form-control form-title">
           <label for="title">Title</label>
@@ -201,7 +237,7 @@ const dom = (() => {
     const addTaskBtn = document.getElementById("add-task");
     addTaskBtn.addEventListener("click", () => {
       if (!document.getElementById("add-task-form")) {
-        dom.createAddTodoForm();
+        dom.createTodoForm();
         closeFormHandler();
         submitFormHandler(todoFormHandler);
       }
@@ -220,6 +256,7 @@ const dom = (() => {
       newTodoForm.addEventListener("submit", (event) => {
         event.preventDefault();
 
+        console.log(newTodoForm.elements.duedate.value);
         const todoObj = {
           title: newTodoForm.elements.title.value,
           description: newTodoForm.elements.description.value,
@@ -256,7 +293,7 @@ const dom = (() => {
   return {
     addTodoToPage,
     setPriorityOnPage,
-    createAddTodoForm,
+    createTodoForm,
     formHandler,
     addTaskCompletionListener,
     addTaskDetailsListener,

@@ -6,16 +6,17 @@ const dom = (() => {
   const pageContent = document.querySelector(".main-content");
   let todoTaskCompletionFuncOnClick = "";
   let todoGetTaskObjByIdFuncOnClick = "";
+  let todoEditTaskObjByIdFuncOnClick = "";
 
   // create todo
-  function addTodoToPage(object) {
+  function addTodoToPage(obj) {
     const todo = document.createElement("div");
     todo.classList.add("todo-content");
-    todo.dataset.id = object.getIdNum();
+    todo.dataset.id = obj.getIdNum();
 
     const checkbox = document.createElement("i");
     checkbox.classList.add("far");
-    if (object.getCompletion() === false) {
+    if (obj.getCompletion() === false) {
       checkbox.classList.add("fa-square");
     } else {
       checkbox.classList.add("fa-check-square");
@@ -25,7 +26,7 @@ const dom = (() => {
 
     const title = document.createElement("p");
     title.classList.add("todo-title");
-    title.innerText = object.getTitle();
+    title.innerText = obj.getTitle();
 
     const edit = document.createElement("i");
     edit.classList.add("fas");
@@ -37,7 +38,7 @@ const dom = (() => {
     priority.classList.add("fa-flag");
     priority.classList.add("todo-icon");
 
-    setPriorityOnPage(object.getPriority(), priority);
+    setPriorityOnPage(obj.getPriority(), priority);
 
     const deleteBtn = document.createElement("i");
     deleteBtn.classList.add("fas");
@@ -69,8 +70,9 @@ const dom = (() => {
       const todoObjById = todoGetTaskObjByIdFuncOnClick(
         Number(event.target.parentNode.dataset.id)
       );
-
-      addEditFormOnPage(todoObjById);
+      // create edit form, set form inputs to curren values,
+      // on submit edit todo on page and call func to edit todo in array
+      editTodo();
     });
   }
 
@@ -89,22 +91,26 @@ const dom = (() => {
     todoTaskCompletionFuncOnClick = functionOnClick;
   }
 
-  function addTaskDetailsListener(functionOnClick) {
+  function setTodoGetObjectByIdFunc(functionOnClick) {
     todoGetTaskObjByIdFuncOnClick = functionOnClick;
   }
 
-  function showTaskDetails(object) {
+  function setTodoEditObjectByIdFunc(functionOnClick) {
+    todoEditTaskObjByIdFuncOnClick = functionOnClick;
+  }
+
+  function showTaskDetails(obj) {
     const todoDetailsContainer = document.createElement("div");
     todoDetailsContainer.classList.add("details-container");
 
     todoDetailsContainer.innerHTML = `
     <div class="details-wrapper">
       <button id="close-details"><i class="fas fa-times"></i></button>
-      <h3>${object.getTitle()}</h3>
-      <p id="details-description">Description: ${object.getDescription()}</p>
-      <p id="details-date">Due Date: ${object.getDueDate()}</p>
-      <p id="details-priority">Priority: ${object.getPriority()}</p>
-      <p id="details-project">Project: ${object.getProject()}</p>
+      <h3>${obj.getTitle()}</h3>
+      <p id="details-description">Description: ${obj.getDescription()}</p>
+      <p id="details-date">Due Date: ${obj.getDueDate()}</p>
+      <p id="details-priority">Priority: ${obj.getPriority()}</p>
+      <p id="details-project">Project: ${obj.getProject()}</p>
     </div>`;
     todoDetailsContainer.style.animation = "fade-in 0.5s";
     document.querySelector("body").appendChild(todoDetailsContainer);
@@ -125,36 +131,83 @@ const dom = (() => {
     });
   }
 
-  function editTask() {}
-
-  function addEditFormOnPage(object) {
-    createTodoForm();
-    setEditFormInputsToObjectVals(object);
+  function editTodo(todoObj) {
+    addEditFormOnPage(todoObj);
   }
 
-  function setEditFormInputsToObjectVals(object) {
+  function addEditFormOnPage(todoObj) {
+    createTodoForm();
+    submitEditFormHandler(todoObj.getIdNum());
+    setEditFormInputsToObjectVals(todoObj);
+  }
+
+  function setEditFormInputsToObjectVals(todoObj) {
     const formH3 = document.querySelector(".form-h3");
     formH3.innerText = "Edit Task";
 
     const titleInput = document.getElementById("title");
-    titleInput.value = `${object.getTitle()}`;
+    titleInput.value = `${obj.getTitle()}`;
 
     const descriptionInput = document.getElementById("description");
-    descriptionInput.value = `${object.getDescription()}`;
+    descriptionInput.value = `${obj.getDescription()}`;
 
     // Fix if - change date back to 2021-07-11
     const dueDateInput = document.getElementById("due-date");
-    dueDateInput.value = `${object.getDueDate()}`;
+    dueDateInput.value = "2021-07-11"; //`${format(parseISO(obj.getDueDate()), "yyyy-MM-dd")}`;
 
     const priorityInput = document.getElementById("priority");
-    priorityInput.value = `${object.getPriority()}`;
+    priorityInput.value = `${obj.getPriority()}`;
 
     const projectInput = document.getElementById("project");
-    projectInput.value = `${object.getProject()}`;
+    projectInput.value = `${obj.getProject()}`;
+  }
+
+  function closeEditFormHandler() {
+    const closeFormBtn = document.getElementById("close-form");
+    closeFormBtn.addEventListener("click", () => {
+      console.log("test");
+      removeForm();
+    });
+  }
+
+  function submitEditFormHandler(idNum) {
+    const editTodoForm = document.getElementById("add-task-form");
+
+    editTodoForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const todoFormObj = {
+        idNum,
+        title: editTodoForm.elements.title.value,
+        description: editTodoForm.elements.description.value,
+        dueDate: format(
+          parseISO(editTodoForm.elements.duedate.value),
+          "dd-MM-yyyy"
+        ),
+        priority: editTodoForm.elements.priority.value,
+        project: editTodoForm.elements.project.value,
+      };
+
+      todoEditTaskObjByIdFuncOnClick(todoFormObj);
+      // change todo on page
+      changeTodoOnPage(idNum, todoFormObj);
+      removeForm();
+    });
+  }
+
+  function changeTodoOnPage(idNum, obj) {
+    // const todoContainers = document.querySelectorAll(".todo-content");
+    // todoContainers.forEach((todoContainer) => {
+    //   if (Number(todoContainer.dataset.id) === idNum) {}
+    // });
+    const todoContainers = document.querySelectorAll(`div[data-id="${idNum}"]`);
+    todoContainers.querySelector("todo-title").innerText = obj.title;
+    const priorityEl = todoContainers.querySelector("fa-flag");
+    setPriorityOnPage(obj.priority, priorityEl);
   }
 
   // create project
-  function addProjectToPage(object) {}
+  function addProjectToPage(obj) {}
 
   // update main-content on section click
   // inbox
@@ -231,24 +284,26 @@ const dom = (() => {
     </div>`;
     formContainer.style.animation = "fade-in 0.5s";
     document.querySelector("body").appendChild(formContainer);
+
+    closeFormHandler();
   }
 
-  function formHandler(todoFormHandler, todoArr) {
+  function closeFormHandler() {
+    const closeFormBtn = document.getElementById("close-form");
+    closeFormBtn.addEventListener("click", () => {
+      removeForm();
+    });
+  }
+
+  function addingFormHandler(todoFormHandler, todoArr) {
     const addTaskBtn = document.getElementById("add-task");
     addTaskBtn.addEventListener("click", () => {
       if (!document.getElementById("add-task-form")) {
         dom.createTodoForm();
-        closeFormHandler();
+        // closeFormHandler();
         submitFormHandler(todoFormHandler);
       }
     });
-
-    function closeFormHandler() {
-      const closeFormBtn = document.getElementById("close-form");
-      closeFormBtn.addEventListener("click", () => {
-        removeForm();
-      });
-    }
 
     function submitFormHandler(todoFormHandler) {
       const newTodoForm = document.getElementById("add-task-form");
@@ -294,9 +349,10 @@ const dom = (() => {
     addTodoToPage,
     setPriorityOnPage,
     createTodoForm,
-    formHandler,
+    addingFormHandler,
     addTaskCompletionListener,
-    addTaskDetailsListener,
+    setTodoGetObjectByIdFunc,
+    setTodoEditObjectByIdFunc,
   };
 })();
 

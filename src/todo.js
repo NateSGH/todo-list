@@ -55,6 +55,7 @@ const todoFactory = (title, description, dueDate, priority, project) => {
     getCompletion,
     getProperties,
     setCompletion,
+    setProperties,
   };
 };
 
@@ -119,16 +120,16 @@ function getTodoObjectById(idNum) {
 
 function editTodoObjById(obj) {
   const index = getTodoIndexById(obj.idNum);
-  if (index) {
-    todoArr[index].setProperties(
-      obj.title,
-      obj.description,
-      obj.dueDate,
-      obj.priority,
-      obj.project
-    );
-    console.log(todoArr[index].getProperties());
-  }
+  console.log(index);
+
+  todoArr[index].setProperties(
+    obj.title,
+    obj.description,
+    obj.dueDate,
+    obj.priority,
+    obj.project
+  );
+  console.log(todoArr[index].getProperties());
 }
 
 const counterCreator = () => {

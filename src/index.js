@@ -24,7 +24,7 @@ dom.addTodoToPage(test1Todo);
 dom.addTodoToPage(test2Todo);
 dom.addTodoToPage(test3Todo);
 
-dom.formHandler(addNewTodoByUser, todoArr);
+dom.addingFormHandler(addNewTodoByUser, todoArr);
 dom.addTaskCompletionListener(setTaskCompletionById);
 dom.setTodoGetObjectByIdFunc(getTodoObjectById);
 dom.setTodoEditObjectByIdFunc(editTodoObjById);

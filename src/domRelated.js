@@ -72,7 +72,7 @@ const dom = (() => {
       );
       // create edit form, set form inputs to curren values,
       // on submit edit todo on page and call func to edit todo in array
-      editTodo();
+      editTodo(todoObjById);
     });
   }
 
@@ -146,20 +146,20 @@ const dom = (() => {
     formH3.innerText = "Edit Task";
 
     const titleInput = document.getElementById("title");
-    titleInput.value = `${obj.getTitle()}`;
+    titleInput.value = `${todoObj.getTitle()}`;
 
     const descriptionInput = document.getElementById("description");
-    descriptionInput.value = `${obj.getDescription()}`;
+    descriptionInput.value = `${todoObj.getDescription()}`;
 
     // Fix if - change date back to 2021-07-11
     const dueDateInput = document.getElementById("due-date");
-    dueDateInput.value = "2021-07-11"; //`${format(parseISO(obj.getDueDate()), "yyyy-MM-dd")}`;
+    dueDateInput.value = "2021-07-11"; //`${format(parseISO(todoObj.getDueDate()), "yyyy-MM-dd")}`;
 
     const priorityInput = document.getElementById("priority");
-    priorityInput.value = `${obj.getPriority()}`;
+    priorityInput.value = `${todoObj.getPriority()}`;
 
     const projectInput = document.getElementById("project");
-    projectInput.value = `${obj.getProject()}`;
+    projectInput.value = `${todoObj.getProject()}`;
   }
 
   function closeEditFormHandler() {
@@ -200,9 +200,9 @@ const dom = (() => {
     // todoContainers.forEach((todoContainer) => {
     //   if (Number(todoContainer.dataset.id) === idNum) {}
     // });
-    const todoContainers = document.querySelectorAll(`div[data-id="${idNum}"]`);
-    todoContainers.querySelector("todo-title").innerText = obj.title;
-    const priorityEl = todoContainers.querySelector("fa-flag");
+    const todoContainer = document.querySelector(`div[data-id="${idNum}"]`);
+    todoContainer.querySelector(".todo-title").innerText = obj.title;
+    const priorityEl = todoContainer.querySelector(".fa-flag");
     setPriorityOnPage(obj.priority, priorityEl);
   }
 

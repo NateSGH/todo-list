@@ -151,23 +151,20 @@ const dom = (() => {
     const descriptionInput = document.getElementById("description");
     descriptionInput.value = `${todoObj.getDescription()}`;
 
-    // Fix if - change date back to 2021-07-11
     const dueDateInput = document.getElementById("due-date");
-    dueDateInput.value = "2021-07-11"; //`${format(parseISO(todoObj.getDueDate()), "yyyy-MM-dd")}`;
-
+    const curDueDate = todoObj.getDueDate();
+    // Format date to YYYY-mm-dd -> 2021-07-11
+    dueDateInput.value = `${
+      curDueDate.slice(6) +
+      curDueDate.slice(2, 5) +
+      "-" +
+      curDueDate.slice(0, 2)
+    }`;
     const priorityInput = document.getElementById("priority");
     priorityInput.value = `${todoObj.getPriority()}`;
 
     const projectInput = document.getElementById("project");
     projectInput.value = `${todoObj.getProject()}`;
-  }
-
-  function closeEditFormHandler() {
-    const closeFormBtn = document.getElementById("close-form");
-    closeFormBtn.addEventListener("click", () => {
-      console.log("test");
-      removeForm();
-    });
   }
 
   function submitEditFormHandler(idNum) {

@@ -7,6 +7,7 @@ const dom = (() => {
   let todoTaskCompletionFuncOnClick = "";
   let todoGetTaskObjByIdFuncOnClick = "";
   let todoEditTaskObjByIdFuncOnClick = "";
+  let todoDeleteTaskObjByIdFuncOnClick = "";
 
   // create todo
   function addTodoToPage(obj) {
@@ -74,6 +75,19 @@ const dom = (() => {
       // on submit edit todo on page and call func to edit todo in array
       editTodo(todoObjById);
     });
+
+    deleteBtn.addEventListener("click", (event) => {
+      const todoObjById = todoGetTaskObjByIdFuncOnClick(
+        Number(event.target.parentNode.dataset.id)
+      );
+      console.log("object to delete");
+      console.log(todoObjById.getProperties());
+
+      deleteTodoOnPage(todoObjById);
+      todoDeleteTaskObjByIdFuncOnClick(
+        Number(event.target.parentNode.dataset.id)
+      );
+    });
   }
 
   function toggleTaskCompletion(checkboxEl, titleEl) {
@@ -97,6 +111,10 @@ const dom = (() => {
 
   function setTodoEditObjectByIdFunc(functionOnClick) {
     todoEditTaskObjByIdFuncOnClick = functionOnClick;
+  }
+
+  function setTodoDeleteObjectByIdFunc(functionOnClick) {
+    todoDeleteTaskObjByIdFuncOnClick = functionOnClick;
   }
 
   function showTaskDetails(obj) {
@@ -193,14 +211,19 @@ const dom = (() => {
   }
 
   function changeTodoOnPage(idNum, obj) {
-    // const todoContainers = document.querySelectorAll(".todo-content");
-    // todoContainers.forEach((todoContainer) => {
-    //   if (Number(todoContainer.dataset.id) === idNum) {}
-    // });
     const todoContainer = document.querySelector(`div[data-id="${idNum}"]`);
     todoContainer.querySelector(".todo-title").innerText = obj.title;
     const priorityEl = todoContainer.querySelector(".fa-flag");
     setPriorityOnPage(obj.priority, priorityEl);
+  }
+
+  function deleteTodoOnPage(todoObj) {
+    const todoContainer = document.querySelector(
+      `div[data-id="${todoObj.getIdNum()}"]`
+    );
+
+    todoContainer.style.animation = "fade-out 0.4s";
+    setTimeout(() => todoContainer.remove(), 350);
   }
 
   // create project
@@ -350,6 +373,7 @@ const dom = (() => {
     addTaskCompletionListener,
     setTodoGetObjectByIdFunc,
     setTodoEditObjectByIdFunc,
+    setTodoDeleteObjectByIdFunc,
   };
 })();
 

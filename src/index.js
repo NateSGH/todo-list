@@ -6,6 +6,7 @@ import {
   setTaskCompletionById,
   getTodoObjectById,
   editTodoObjById,
+  deleteTodoObjById,
 } from "./todo.js";
 import { dom } from "./domRelated.js";
 
@@ -28,3 +29,4 @@ dom.addingFormHandler(addNewTodoByUser, todoArr);
 dom.addTaskCompletionListener(setTaskCompletionById);
 dom.setTodoGetObjectByIdFunc(getTodoObjectById);
 dom.setTodoEditObjectByIdFunc(editTodoObjById);
+dom.setTodoDeleteObjectByIdFunc(deleteTodoObjById);

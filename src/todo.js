@@ -132,6 +132,14 @@ function editTodoObjById(obj) {
   console.log(todoArr[index].getProperties());
 }
 
+function deleteTodoObjById(idNum) {
+  const index = getTodoIndexById(idNum);
+  todoArr.splice(index, 1);
+  todoArr.forEach((todoArrObj) => {
+    console.log(todoArrObj.getProperties());
+  });
+}
+
 const counterCreator = () => {
   let count = 0;
   return () => {
@@ -150,4 +158,5 @@ export {
   setTaskCompletionById,
   getTodoObjectById,
   editTodoObjById,
+  deleteTodoObjById,
 };

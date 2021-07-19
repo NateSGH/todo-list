@@ -1,12 +1,14 @@
 import "./style.css";
 import {
   todoArr,
+  projectsArr,
   todoFactory,
   addNewTodoByUser,
   setTaskCompletionById,
   getTodoObjectById,
   editTodoObjById,
   deleteTodoObjById,
+  addNewProjectByUser,
 } from "./todo.js";
 import { dom } from "./domRelated.js";
 
@@ -25,8 +27,9 @@ dom.addTodoToPage(test1Todo);
 dom.addTodoToPage(test2Todo);
 dom.addTodoToPage(test3Todo);
 
-dom.addingFormHandler(addNewTodoByUser, todoArr);
+dom.addingTodoFormHandler(addNewTodoByUser, todoArr);
 dom.addTaskCompletionListener(setTaskCompletionById);
 dom.setTodoGetObjectByIdFunc(getTodoObjectById);
 dom.setTodoEditObjectByIdFunc(editTodoObjById);
 dom.setTodoDeleteObjectByIdFunc(deleteTodoObjById);
+dom.addingProjectFormHandler(addNewProjectByUser, projectsArr);

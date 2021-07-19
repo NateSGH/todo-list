@@ -2,6 +2,8 @@ import { format } from "date-fns";
 
 let todoArr = [];
 
+let projectsArr = [];
+
 const todoFactory = (title, description, dueDate, priority, project) => {
   let completed = false;
   const idNum = idCounter();
@@ -88,10 +90,27 @@ function createTodoObjWithFormInfo(formTodoObj) {
   );
 }
 
+function addNewProjectByUser(formProject) {
+  // check if project exists
+  for (let i = 0; i < projectsArr.length; i++) {
+    if (formProject === todoArr[i]) {
+      alert("Project is already exists!");
+      return false;
+    }
+  }
+  // if not exists add to array
+  addProjectToArr(formProject);
+  return true;
+}
+
+function addProjectToArr(project) {
+  projectsArr.push(project);
+  console.log(projectsArr);
+}
+
 function addTodoToArr(todoObj) {
   todoArr.push(todoObj);
   console.log(todoArr);
-  console.log(todoArr[0].getTitle());
 }
 
 function getTodoIndexById(idNum) {
@@ -152,6 +171,7 @@ const idCounter = counterCreator();
 
 export {
   todoArr,
+  projectsArr,
   todoFactory,
   addNewTodoByUser,
   idCounter,
@@ -159,4 +179,5 @@ export {
   getTodoObjectById,
   editTodoObjById,
   deleteTodoObjById,
+  addNewProjectByUser,
 };

@@ -227,7 +227,65 @@ const dom = (() => {
   }
 
   // create project
-  function addProjectToPage(obj) {}
+  function addProjectToPage(project) {
+    const projectsDiv = document.querySelector(".projects");
+
+    const projectP = document.createElement("p");
+    projectP.classList.add("todo-project");
+    projectP.innerText = project;
+
+    projectsDiv.appendChild(projectP);
+  }
+
+  function createProjectForm() {
+    const formContainer = document.createElement("div");
+    formContainer.classList.add("form-container");
+
+    formContainer.innerHTML = `
+    <div class="form-wrapper">
+      <button id="close-form"><i class="fas fa-times"></i></button>
+      <h3 class="form-h3">Add New Project</h3>
+      <form id="add-project-form">
+        <div class="form-control form-title">
+          <label for="title">Title</label>
+          <input type="text" name="title" id="title"
+              placeholder="Enter todo title" required>
+        </div>
+
+        <input type="submit" value="Submit" id="form-submit">
+      </form>
+    </div>`;
+    formContainer.style.animation = "fade-in 0.5s";
+    document.querySelector("body").appendChild(formContainer);
+
+    closeFormHandler();
+  }
+
+  function addingProjectFormHandler(todoProjectHandler, todoProjectsArr) {
+    const addProjectBtn = document.getElementById("add-project");
+    addProjectBtn.addEventListener("click", () => {
+      console.log("test project");
+      if (!document.getElementById("add-project-form")) {
+        createProjectForm();
+        submitFormHandler(todoProjectHandler);
+      }
+    });
+
+    function submitFormHandler(todoProjectFormHandler) {
+      const newProjectForm = document.getElementById("add-project-form");
+
+      newProjectForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const nexProject = newProjectForm.elements.title.value;
+
+        if (todoProjectFormHandler(nexProject)) {
+          removeForm();
+          addProjectToPage(todoProjectsArr[todoProjectsArr.length - 1]);
+        }
+      });
+    }
+  }
 
   // update main-content on section click
   // inbox
@@ -315,12 +373,11 @@ const dom = (() => {
     });
   }
 
-  function addingFormHandler(todoFormHandler, todoArr) {
+  function addingTodoFormHandler(todoFormHandler, todoArr) {
     const addTaskBtn = document.getElementById("add-task");
     addTaskBtn.addEventListener("click", () => {
       if (!document.getElementById("add-task-form")) {
         dom.createTodoForm();
-        // closeFormHandler();
         submitFormHandler(todoFormHandler);
       }
     });
@@ -369,11 +426,12 @@ const dom = (() => {
     addTodoToPage,
     setPriorityOnPage,
     createTodoForm,
-    addingFormHandler,
+    addingTodoFormHandler,
     addTaskCompletionListener,
     setTodoGetObjectByIdFunc,
     setTodoEditObjectByIdFunc,
     setTodoDeleteObjectByIdFunc,
+    addingProjectFormHandler,
   };
 })();
 

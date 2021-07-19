@@ -9,13 +9,29 @@ import {
   editTodoObjById,
   deleteTodoObjById,
   addNewProjectByUser,
+  getProjects,
 } from "./todo.js";
 import { dom } from "./domRelated.js";
 
-const testTodo = todoFactory("Test TODO", "Todo to test", 10, "low");
-const test1Todo = todoFactory("Test 1 TODO", "Todo to test", 10, "medium");
-const test2Todo = todoFactory("Test 2 TODO", "Todo to test", 10, "high");
-const test3Todo = todoFactory("Test 3 TODO", "Todo to test", 10, "low");
+const testTodo = todoFactory("Test TODO", "Todo to test", "19-07-2021", "low");
+const test1Todo = todoFactory(
+  "Test 1 TODO",
+  "Todo to test",
+  "19-07-2021",
+  "medium"
+);
+const test2Todo = todoFactory(
+  "Test 2 TODO",
+  "Todo to test",
+  "19-07-2021",
+  "high"
+);
+const test3Todo = todoFactory(
+  "Test 3 TODO",
+  "Todo to test",
+  "19-07-2021",
+  "low"
+);
 
 todoArr.push(testTodo);
 todoArr.push(test1Todo);
@@ -27,9 +43,10 @@ dom.addTodoToPage(test1Todo);
 dom.addTodoToPage(test2Todo);
 dom.addTodoToPage(test3Todo);
 
-dom.addingTodoFormHandler(addNewTodoByUser, todoArr);
+dom.addingTodoFormHandler(addNewTodoByUser, todoArr, projectsArr);
 dom.addTaskCompletionListener(setTaskCompletionById);
 dom.setTodoGetObjectByIdFunc(getTodoObjectById);
 dom.setTodoEditObjectByIdFunc(editTodoObjById);
 dom.setTodoDeleteObjectByIdFunc(deleteTodoObjById);
+dom.setTodoGetProjects(getProjects);
 dom.addingProjectFormHandler(addNewProjectByUser, projectsArr);

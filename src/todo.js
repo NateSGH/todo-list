@@ -2,7 +2,7 @@ import { format } from "date-fns";
 
 let todoArr = [];
 
-let projectsArr = [];
+let projectsArr = ["Inbox", "Test", "Wow"];
 
 const todoFactory = (title, description, dueDate, priority, project) => {
   let completed = false;
@@ -108,6 +108,10 @@ function addProjectToArr(project) {
   console.log(projectsArr);
 }
 
+function getProjects() {
+  return projectsArr;
+}
+
 function addTodoToArr(todoObj) {
   todoArr.push(todoObj);
   console.log(todoArr);
@@ -180,4 +184,5 @@ export {
   editTodoObjById,
   deleteTodoObjById,
   addNewProjectByUser,
+  getProjects,
 };

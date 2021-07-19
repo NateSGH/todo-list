@@ -8,6 +8,7 @@ const dom = (() => {
   let todoGetTaskObjByIdFuncOnClick = "";
   let todoEditTaskObjByIdFuncOnClick = "";
   let todoDeleteTaskObjByIdFuncOnClick = "";
+  let todoGetProjectsFunc = "";
 
   // create todo
   function addTodoToPage(obj) {
@@ -117,6 +118,10 @@ const dom = (() => {
     todoDeleteTaskObjByIdFuncOnClick = functionOnClick;
   }
 
+  function setTodoGetProjects(functionOnClick) {
+    todoGetProjectsFunc = functionOnClick;
+  }
+
   function showTaskDetails(obj) {
     const todoDetailsContainer = document.createElement("div");
     todoDetailsContainer.classList.add("details-container");
@@ -154,7 +159,7 @@ const dom = (() => {
   }
 
   function addEditFormOnPage(todoObj) {
-    createTodoForm();
+    createTodoForm(todoGetProjectsFunc());
     submitEditFormHandler(todoObj.getIdNum());
     setEditFormInputsToObjectVals(todoObj);
   }
@@ -314,7 +319,7 @@ const dom = (() => {
     }
   }
 
-  function createTodoForm() {
+  function createTodoForm(todoProjectsArr) {
     const formContainer = document.createElement("div");
     formContainer.classList.add("form-container");
 
@@ -353,15 +358,22 @@ const dom = (() => {
         <div class="form-control form-project">
           <label for="project">Project</label>
           <select name="project" id="project">
-              <option value="inbox">Inbox</option>
           </select>
         </div>
 
           <input type="submit" value="Submit" id="form-submit">
       </form>
     </div>`;
+
     formContainer.style.animation = "fade-in 0.5s";
     document.querySelector("body").appendChild(formContainer);
+
+    const projectsSelect = document.querySelector("select#project");
+    console.log(todoProjectsArr);
+    todoProjectsArr.forEach((project) => {
+      console.log(project);
+      projectsSelect.innerHTML += `<option value="${project}">${project}</option>`;
+    });
 
     closeFormHandler();
   }
@@ -373,11 +385,11 @@ const dom = (() => {
     });
   }
 
-  function addingTodoFormHandler(todoFormHandler, todoArr) {
+  function addingTodoFormHandler(todoFormHandler, todoArr, todoProjectsArr) {
     const addTaskBtn = document.getElementById("add-task");
     addTaskBtn.addEventListener("click", () => {
       if (!document.getElementById("add-task-form")) {
-        dom.createTodoForm();
+        createTodoForm(todoGetProjectsFunc());
         submitFormHandler(todoFormHandler);
       }
     });
@@ -424,14 +436,13 @@ const dom = (() => {
 
   return {
     addTodoToPage,
-    setPriorityOnPage,
-    createTodoForm,
     addingTodoFormHandler,
     addTaskCompletionListener,
     setTodoGetObjectByIdFunc,
     setTodoEditObjectByIdFunc,
     setTodoDeleteObjectByIdFunc,
     addingProjectFormHandler,
+    setTodoGetProjects,
   };
 })();
 

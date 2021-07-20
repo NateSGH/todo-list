@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+import { format, isThisWeek } from "date-fns";
 import parseISO from "date-fns/parseISO";
 
 // DOM module (module pattern)
@@ -9,6 +9,7 @@ const dom = (() => {
   let todoEditTaskObjByIdFuncOnClick = "";
   let todoDeleteTaskObjByIdFuncOnClick = "";
   let todoGetProjectsFunc = "";
+  let todoGetTodosFunc = "";
 
   // create todo
   function addTodoToPage(obj) {
@@ -56,7 +57,6 @@ const dom = (() => {
 
     checkbox.addEventListener("click", (event) => {
       toggleTaskCompletion(checkbox, title);
-      console.log(event.target.parentNode.dataset.id);
       todoTaskCompletionFuncOnClick(Number(event.target.parentNode.dataset.id));
     });
 
@@ -81,8 +81,6 @@ const dom = (() => {
       const todoObjById = todoGetTaskObjByIdFuncOnClick(
         Number(event.target.parentNode.dataset.id)
       );
-      console.log("object to delete");
-      console.log(todoObjById.getProperties());
 
       deleteTodoOnPage(todoObjById);
       todoDeleteTaskObjByIdFuncOnClick(
@@ -120,6 +118,10 @@ const dom = (() => {
 
   function setTodoGetProjects(functionOnClick) {
     todoGetProjectsFunc = functionOnClick;
+  }
+
+  function setTodoGetTodos(functionOnClick) {
+    todoGetTodosFunc = functionOnClick;
   }
 
   function showTaskDetails(obj) {
@@ -269,7 +271,6 @@ const dom = (() => {
   function addingProjectFormHandler(todoProjectHandler, todoProjectsArr) {
     const addProjectBtn = document.getElementById("add-project");
     addProjectBtn.addEventListener("click", () => {
-      console.log("test project");
       if (!document.getElementById("add-project-form")) {
         createProjectForm();
         submitFormHandler(todoProjectHandler);
@@ -295,9 +296,55 @@ const dom = (() => {
   // update main-content on section click
   // inbox
 
+  function inboxBtnEventListener() {
+    const inboxBtn = document.getElementById("inbox");
+
+    inboxBtn.addEventListener("click", () => {
+      document.querySelector(".main-content").innerHTML = "";
+      todoGetTodosFunc().forEach((todo) => {
+        if (todo.getProject() === "Inbox") {
+          addTodoToPage(todo);
+        }
+      });
+    });
+  }
   //today
+  function todayBtnEventListener() {
+    const todayBtn = document.getElementById("today");
+
+    todayBtn.addEventListener("click", () => {
+      document.querySelector(".main-content").innerHTML = "";
+      todoGetTodosFunc().forEach((todo) => {
+        const todayDate = format(new Date(), "dd-MM-yyyy");
+        if (todo.getDueDate() === todayDate) {
+          addTodoToPage(todo);
+        }
+      });
+    });
+  }
 
   // this week
+  function thisWeekBtnEventListener() {
+    const thisWeekBtn = document.getElementById("this-week");
+
+    thisWeekBtn.addEventListener("click", () => {
+      document.querySelector(".main-content").innerHTML = "";
+      todoGetTodosFunc().forEach((todo) => {
+        let curDueDate = todo.getDueDate();
+        // Format date to YYYY-mm-dd -> 2021-07-11
+        curDueDate = `${
+          curDueDate.slice(6) +
+          curDueDate.slice(2, 5) +
+          "-" +
+          curDueDate.slice(0, 2)
+        }`;
+        const todayDate = parseISO(curDueDate);
+        if (isThisWeek(todayDate, { weekStartsOn: 1 })) {
+          addTodoToPage(todo);
+        }
+      });
+    });
+  }
 
   // projects
 
@@ -398,7 +445,6 @@ const dom = (() => {
       newTodoForm.addEventListener("submit", (event) => {
         event.preventDefault();
 
-        console.log(newTodoForm.elements.duedate.value);
         const todoObj = {
           title: newTodoForm.elements.title.value,
           description: newTodoForm.elements.description.value,
@@ -432,6 +478,10 @@ const dom = (() => {
     }
   });
 
+  inboxBtnEventListener();
+  todayBtnEventListener();
+  thisWeekBtnEventListener();
+
   return {
     addTodoToPage,
     addingTodoFormHandler,
@@ -441,6 +491,7 @@ const dom = (() => {
     setTodoDeleteObjectByIdFunc,
     addingProjectFormHandler,
     setTodoGetProjects,
+    setTodoGetTodos,
   };
 })();
 

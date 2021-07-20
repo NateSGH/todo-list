@@ -112,6 +112,10 @@ function getProjects() {
   return projectsArr;
 }
 
+function getTodos() {
+  return todoArr;
+}
+
 function addTodoToArr(todoObj) {
   todoArr.push(todoObj);
   console.log(todoArr);
@@ -185,4 +189,5 @@ export {
   deleteTodoObjById,
   addNewProjectByUser,
   getProjects,
+  getTodos,
 };

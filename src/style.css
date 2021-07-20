@@ -142,7 +142,8 @@ button {
   color: var(--font-dark);
 }
 
-.form-wrapper {
+.form-wrapper,
+.project-form-wrapper {
   background-color: rgba(255, 255, 255, 0.8);
   position: fixed;
   border: 2px solid var(--header-bg-color);
@@ -160,7 +161,8 @@ button {
     "form form";
 }
 
-.form-wrapper h3 {
+.form-wrapper h3,
+.project-form-wrapper h3 {
   grid-area: heading;
   align-self: center;
   margin-left: var(--form-margin);
@@ -207,10 +209,12 @@ button {
   grid-gap: 10px;
 }
 
-#add-task-form label {
+#add-task-form label,
+#add-project-form label {
   font-weight: bold;
   margin-bottom: 5px;
 }
+
 input,
 select,
 textarea {
@@ -271,6 +275,18 @@ textarea {
   transform: scale(0.95);
 }
 
+#add-project-form {
+  font: inherit;
+  grid-area: form;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(2, 1fr);
+  grid-template-areas:
+    "title title"
+    ". submit";
+  grid-gap: 10px;
+}
+
 .details-wrapper {
   display: grid;
   grid-template-columns: 1fr;
@@ -319,7 +335,8 @@ p {
 }
 
 @media (max-width: 1100px) {
-  .form-wrapper {
+  .form-wrapper,
+  .project-form-wrapper {
     width: 60vw;
   }
 }

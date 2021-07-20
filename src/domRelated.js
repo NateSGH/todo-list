@@ -247,7 +247,7 @@ const dom = (() => {
     formContainer.classList.add("form-container");
 
     formContainer.innerHTML = `
-    <div class="form-wrapper">
+    <div class="project-form-wrapper">
       <button id="close-form"><i class="fas fa-times"></i></button>
       <h3 class="form-h3">Add New Project</h3>
       <form id="add-project-form">
@@ -369,9 +369,7 @@ const dom = (() => {
     document.querySelector("body").appendChild(formContainer);
 
     const projectsSelect = document.querySelector("select#project");
-    console.log(todoProjectsArr);
     todoProjectsArr.forEach((project) => {
-      console.log(project);
       projectsSelect.innerHTML += `<option value="${project}">${project}</option>`;
     });
 

@@ -241,6 +241,20 @@ const dom = (() => {
     projectP.classList.add("todo-project");
     projectP.innerText = project;
 
+    projectP.addEventListener("click", () => {
+      document.querySelectorAll(".todo-project").forEach((project) => {
+        project.style.backgroundColor = "transparent";
+      });
+
+      projectP.style.backgroundColor = "rgba(108, 138, 136, 0.3)";
+      document.querySelector(".main-content").innerHTML = "";
+      todoGetTodosFunc().forEach((todo) => {
+        if (todo.getProject() === projectP.innerText) {
+          addTodoToPage(todo);
+        }
+      });
+    });
+
     projectsDiv.appendChild(projectP);
   }
 
@@ -263,9 +277,12 @@ const dom = (() => {
       </form>
     </div>`;
     formContainer.style.animation = "fade-in 0.5s";
+
     document.querySelector("body").appendChild(formContainer);
 
     closeFormHandler();
+
+    formContainer.querySelector("#title").focus();
   }
 
   function addingProjectFormHandler(todoProjectHandler, todoProjectsArr) {
@@ -420,6 +437,7 @@ const dom = (() => {
       projectsSelect.innerHTML += `<option value="${project}">${project}</option>`;
     });
 
+    formContainer.querySelector("#title").focus();
     closeFormHandler();
   }
 
@@ -477,6 +495,10 @@ const dom = (() => {
       removeDetails();
     }
   });
+
+  // document.querySelector(".sections-panel").addEventListener("click", () => {
+
+  // });
 
   inboxBtnEventListener();
   todayBtnEventListener();

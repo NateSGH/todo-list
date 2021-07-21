@@ -77,6 +77,20 @@ button {
   flex-direction: column;
 }
 
+.todo-project {
+  font-family: inherit;
+  font-size: 22px;
+  color: var(--font-dark);
+  padding: 15px;
+  text-align: right;
+  cursor: pointer;
+  margin: 0;
+}
+
+.todo-project:hover {
+  background-color: rgba(108, 138, 136, 0.3);
+}
+
 .main-content {
   grid-area: content;
   display: flex;
@@ -310,7 +324,7 @@ textarea {
 }
 
 .details-wrapper h3,
-p {
+.details-wrapper p {
   margin: 0 0 0 10px;
 }
 

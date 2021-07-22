@@ -41,8 +41,8 @@ const test4Todo = todoFactory(
   "Test 4 TODO",
   "Todo to test",
   "13-07-2021",
-  "low",
-  "Test"
+  "medium",
+  "Secret Project"
 );
 
 const test5Todo = todoFactory(
@@ -53,15 +53,30 @@ const test5Todo = todoFactory(
   "Test"
 );
 
+const test6Todo = todoFactory(
+  "Test 6 TODO",
+  "Todo to test",
+  "18-07-2021",
+  "high",
+  "Wow"
+);
+
 todoArr.push(testTodo);
 todoArr.push(test1Todo);
 todoArr.push(test2Todo);
 todoArr.push(test3Todo);
 todoArr.push(test4Todo);
 todoArr.push(test5Todo);
+todoArr.push(test6Todo);
 
 todoArr.forEach((todo) => {
   dom.addTodoToPage(todo);
+});
+
+getProjects().forEach((project) => {
+  if (project !== "Inbox") {
+    dom.addProjectToPage(project);
+  }
 });
 
 dom.addingTodoFormHandler(addNewTodoByUser, todoArr, projectsArr);

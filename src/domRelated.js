@@ -506,6 +506,7 @@ const dom = (() => {
 
   return {
     addTodoToPage,
+    addProjectToPage,
     addingTodoFormHandler,
     addTaskCompletionListener,
     setTodoGetObjectByIdFunc,

@@ -2,7 +2,7 @@ import { format } from "date-fns";
 
 let todoArr = [];
 
-let projectsArr = ["Inbox", "Test", "Wow"];
+let projectsArr = ["Inbox", "Test", "Wow", "Secret Project"];
 
 const todoFactory = (title, description, dueDate, priority, project) => {
   let completed = false;

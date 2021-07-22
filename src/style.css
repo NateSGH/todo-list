@@ -131,15 +131,29 @@ button {
 }
 
 #add-project {
-  font-size: 14px;
+  font-size: 15px;
   text-align: right;
   font-weight: bolder;
   width: fit-content;
   height: fit-content;
   align-self: flex-end;
   padding: 10px;
-  margin: 5px 20px 0 0;
-  border: 1px solid var(--sections-icons-color);
+  margin: 10px 30px 0 0;
+  background-color: var(--btn-color);
+  color: var(--font-color);
+  border-radius: 5px;
+  cursor: pointer;
+  border: none;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+#add-project:hover {
+  background-color: var(--btn-hover-color);
+}
+
+#add-project:active {
+  background-color: var(--btn-hover-color);
+  transform: scale(0.95);
 }
 
 .form-container,

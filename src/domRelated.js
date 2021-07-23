@@ -496,9 +496,18 @@ const dom = (() => {
     }
   });
 
-  // document.querySelector(".sections-panel").addEventListener("click", () => {
-
-  // });
+  document
+    .querySelector(".sections-panel")
+    .addEventListener("click", (event) => {
+      console.log(event.target.parentNode);
+      if (event.target.parentNode != document.querySelector(".projects")) {
+        console.log("if done");
+        console.log(event.target.parentNode);
+        document.querySelectorAll(".todo-project").forEach((project) => {
+          project.style.backgroundColor = "transparent";
+        });
+      }
+    });
 
   inboxBtnEventListener();
   todayBtnEventListener();

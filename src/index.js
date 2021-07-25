@@ -14,7 +14,13 @@ import {
 } from "./todo.js";
 import { dom } from "./domRelated.js";
 
-const testTodo = todoFactory("Test TODO", "Todo to test", "20-07-2021", "low");
+const testTodo = todoFactory(
+  "Test TODO",
+  "Todo to test",
+  "20-07-2021",
+  "low",
+  "Inbox"
+);
 const test1Todo = todoFactory(
   "Test 1 TODO",
   "Todo to test",
@@ -87,3 +93,13 @@ dom.setTodoDeleteObjectByIdFunc(deleteTodoObjById);
 dom.setTodoGetProjects(getProjects);
 dom.addingProjectFormHandler(addNewProjectByUser, projectsArr);
 dom.setTodoGetTodos(getTodos);
+
+// sketch -> WIP
+todoArr.forEach((todo) => {
+  let prop = todoArr[0].getProperties();
+  sessionStorage.setItem(`${prop.idNum}`, JSON.stringify(prop));
+});
+
+const todo = JSON.parse(sessionStorage.getItem("1"));
+
+console.log(todo);

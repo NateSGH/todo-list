@@ -157,6 +157,14 @@ function editTodoObjById(obj) {
     obj.project
   );
   console.log(todoArr[index].getProperties());
+
+  // sketch -> WIP
+  const props = todoArr[index].getProperties();
+  sessionStorage.setItem(`${obj.idNum}`, JSON.stringify(props));
+
+  const todo = JSON.parse(sessionStorage.getItem(`${obj.idNum}`));
+
+  console.log(todo);
 }
 
 function deleteTodoObjById(idNum) {

@@ -130,6 +130,16 @@ button {
   font-size: 20px;
 }
 
+#add-project,
+#form-submit {
+  background-color: var(--btn-color);
+  color: var(--font-color);
+  border-radius: 5px;
+  cursor: pointer;
+  border: none;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
 #add-project {
   font-size: 15px;
   text-align: right;
@@ -139,12 +149,6 @@ button {
   align-self: flex-end;
   padding: 10px;
   margin: 10px 30px 0 0;
-  background-color: var(--btn-color);
-  color: var(--font-color);
-  border-radius: 5px;
-  cursor: pointer;
-  border: none;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 #add-project:hover {
@@ -174,7 +178,7 @@ button {
 .project-form-wrapper {
   background-color: rgba(255, 255, 255, 0.8);
   position: fixed;
-  border: 2px solid var(--header-bg-color);
+  border: 1px solid var(--header-bg-color);
   border-radius: 8px;
   box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.2);
   width: 30vw;
@@ -286,12 +290,7 @@ textarea {
   justify-self: end;
   align-self: center;
   margin-right: var(--form-margin);
-  background-color: var(--btn-color);
-  color: #fff;
   font-size: 15px;
-  border-radius: 5px;
-  cursor: pointer;
-  border: none;
 }
 
 #form-submit:hover {

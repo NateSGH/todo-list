@@ -67,13 +67,47 @@ const test6Todo = todoFactory(
   "Wow"
 );
 
-todoArr.push(testTodo);
-todoArr.push(test1Todo);
-todoArr.push(test2Todo);
-todoArr.push(test3Todo);
-todoArr.push(test4Todo);
-todoArr.push(test5Todo);
-todoArr.push(test6Todo);
+console.log(sessionStorage.length);
+
+if (sessionStorage.length === 0) {
+  todoArr.push(testTodo);
+  todoArr.push(test1Todo);
+  todoArr.push(test2Todo);
+  todoArr.push(test3Todo);
+  todoArr.push(test4Todo);
+  todoArr.push(test5Todo);
+  todoArr.push(test6Todo);
+
+  for (let i = 0; i < todoArr.length; i++) {
+    console.log("test");
+    let prop = todoArr[i].getProperties();
+    console.log(prop);
+    sessionStorage.setItem(`todo${prop.idNum}`, JSON.stringify(prop));
+  }
+  console.log(sessionStorage);
+} else {
+  todoArr.splice(0, todoArr.length - 1);
+  for (let i = 0; i < sessionStorage.length; i++) {
+    if (sessionStorage.key(i).includes("todo")) {
+      const todo = JSON.parse(sessionStorage.getItem(sessionStorage.key(i)));
+
+      todoArr.push(
+        todoFactory(
+          todo.title,
+          todo.description,
+          todo.dueDate,
+          todo.priority,
+          todo.project
+        )
+      );
+
+      console.log(`session todo id - ${todo.idNum}`);
+      console.log(
+        `todoArr todo id - ${todoArr[todoArr.length - 1].getIdNum()}`
+      );
+    }
+  }
+}
 
 todoArr.forEach((todo) => {
   dom.addTodoToPage(todo);
@@ -95,11 +129,7 @@ dom.addingProjectFormHandler(addNewProjectByUser, projectsArr);
 dom.setTodoGetTodos(getTodos);
 
 // sketch -> WIP
-todoArr.forEach((todo) => {
-  let prop = todoArr[0].getProperties();
-  sessionStorage.setItem(`${prop.idNum}`, JSON.stringify(prop));
-});
 
-const todo = JSON.parse(sessionStorage.getItem("1"));
+// const todo = JSON.parse(sessionStorage.getItem("1"));
 
-console.log(todo);
+// console.log(todo);

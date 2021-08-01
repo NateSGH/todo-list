@@ -17,7 +17,7 @@ const todoFactory = (title, description, dueDate, priority, project) => {
   const getCompletion = () => completed;
 
   const getProperties = () => ({
-    idNum,
+    // idNum,
     title,
     description,
     dueDate,
@@ -76,6 +76,9 @@ function addNewTodoByUser(formTodoObj, todoArr) {
   // if not exists add to array
   const todoItem = createTodoObjWithFormInfo(formTodoObj);
   addTodoToArr(todoItem);
+
+  // add to storage
+  saveTodoToLocalStorage(todoItem);
   console.log(formTodoObj);
   return true;
 }
@@ -149,6 +152,8 @@ function editTodoObjById(obj) {
   const index = getTodoIndexById(obj.idNum);
   console.log(index);
 
+  const oldTodoTitle = todoArr[index].getTitle();
+
   todoArr[index].setProperties(
     obj.title,
     obj.description,
@@ -156,19 +161,17 @@ function editTodoObjById(obj) {
     obj.priority,
     obj.project
   );
+
+  replaceTodoInLocalStorage(oldTodoTitle, todoArr[index]);
+
   console.log(todoArr[index].getProperties());
-
-  // sketch -> WIP
-  const props = todoArr[index].getProperties();
-  sessionStorage.setItem(`${obj.idNum}`, JSON.stringify(props));
-
-  const todo = JSON.parse(sessionStorage.getItem(`${obj.idNum}`));
-
-  console.log(todo);
 }
 
 function deleteTodoObjById(idNum) {
   const index = getTodoIndexById(idNum);
+
+  deleteTodoFromLocalStorage(todoArr[index].getTitle());
+
   todoArr.splice(index, 1);
   todoArr.forEach((todoArrObj) => {
     console.log(todoArrObj.getProperties());
@@ -184,6 +187,24 @@ const counterCreator = () => {
 };
 
 const idCounter = counterCreator();
+
+// Local Storage
+
+function saveTodoToLocalStorage(todoObj) {
+  const todoTosave = todoObj.getProperties();
+  localStorage.setItem(`todo${todoTosave.title}`, JSON.stringify(todoTosave));
+}
+
+function replaceTodoInLocalStorage(oldTodoTitle, newTodoObj) {
+  localStorage.removeItem(`todo${oldTodoTitle}`);
+
+  const newTodo = newTodoObj.getProperties();
+  localStorage.setItem(`todo${newTodo.title}`, JSON.stringify(newTodo));
+}
+
+function deleteTodoFromLocalStorage(todoTitle) {
+  localStorage.removeItem(`todo${todoTitle}`);
+}
 
 export {
   todoArr,

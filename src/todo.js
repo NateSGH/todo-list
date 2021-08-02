@@ -109,6 +109,7 @@ function addNewProjectByUser(formProject) {
 function addProjectToArr(project) {
   projectsArr.push(project);
   console.log(projectsArr);
+  saveProjectsToLocalStorage();
 }
 
 function getProjects() {
@@ -204,6 +205,10 @@ function replaceTodoInLocalStorage(oldTodoTitle, newTodoObj) {
 
 function deleteTodoFromLocalStorage(todoTitle) {
   localStorage.removeItem(`todo${todoTitle}`);
+}
+
+function saveProjectsToLocalStorage(todoObj) {
+  localStorage.setItem(`projects`, JSON.stringify(projectsArr));
 }
 
 export {

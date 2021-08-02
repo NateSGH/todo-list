@@ -318,6 +318,7 @@ const dom = (() => {
     const inboxBtn = document.getElementById("inbox");
 
     inboxBtn.addEventListener("click", () => {
+      highlightSection(inboxBtn);
       document.querySelector(".main-content").innerHTML = "";
       todoGetTodosFunc().forEach((todo) => {
         if (todo.getProject() === "Inbox") {
@@ -331,6 +332,8 @@ const dom = (() => {
     const todayBtn = document.getElementById("today");
 
     todayBtn.addEventListener("click", () => {
+      highlightSection(todayBtn);
+
       document.querySelector(".main-content").innerHTML = "";
       todoGetTodosFunc().forEach((todo) => {
         const todayDate = format(new Date(), "dd-MM-yyyy");
@@ -346,6 +349,7 @@ const dom = (() => {
     const thisWeekBtn = document.getElementById("this-week");
 
     thisWeekBtn.addEventListener("click", () => {
+      highlightSection(thisWeekBtn);
       document.querySelector(".main-content").innerHTML = "";
       todoGetTodosFunc().forEach((todo) => {
         let curDueDate = todo.getDueDate();
@@ -362,6 +366,18 @@ const dom = (() => {
         }
       });
     });
+  }
+
+  function highlightSection(sectionBtn) {
+    document.querySelectorAll(".section").forEach((section) => {
+      section.style.backgroundColor = "transparent";
+    });
+
+    sectionBtn.style.backgroundColor = "rgba(108, 138, 136, 0.3)";
+  }
+
+  function highlightInbox(params) {
+    highlightSection(document.getElementById("inbox"));
   }
 
   // projects
@@ -505,6 +521,11 @@ const dom = (() => {
           project.style.backgroundColor = "transparent";
         });
       }
+      if (event.target.parentNode == document.querySelector(".projects")) {
+        document.querySelectorAll(".section").forEach((section) => {
+          section.style.backgroundColor = "transparent";
+        });
+      }
     });
 
   inboxBtnEventListener();
@@ -522,6 +543,7 @@ const dom = (() => {
     addingProjectFormHandler,
     setTodoGetProjects,
     setTodoGetTodos,
+    highlightInbox,
   };
 })();
 

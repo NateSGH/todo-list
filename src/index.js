@@ -13,6 +13,7 @@ import {
   getTodos,
 } from "./todo.js";
 import { dom } from "./domRelated.js";
+import { format } from "date-fns";
 
 const test1Todo = todoFactory(
   "Test 1 TODO",
@@ -63,33 +64,33 @@ const test6Todo = todoFactory(
 const test7Todo = todoFactory(
   "Test 7 TODO",
   "Todo to test",
-  "07-08-2021",
+  format(new Date(), "dd-MM-yyyy"),
   "low",
   "Inbox"
 );
 
-console.log(localStorage.length);
-
 // localStorage.clear();
 
-if (localStorage.length === 0) {
-  todoArr.push(test1Todo);
-  todoArr.push(test2Todo);
-  todoArr.push(test3Todo);
-  todoArr.push(test4Todo);
-  todoArr.push(test5Todo);
-  todoArr.push(test6Todo);
-  todoArr.push(test7Todo);
+function firstLoad() {
+  let todoTempArr = [];
 
-  for (let i = 0; i < todoArr.length; i++) {
-    let prop = todoArr[i].getProperties();
-    console.log(prop);
+  todoTempArr.push(test1Todo);
+  todoTempArr.push(test2Todo);
+  todoTempArr.push(test3Todo);
+  todoTempArr.push(test4Todo);
+  todoTempArr.push(test5Todo);
+  todoTempArr.push(test6Todo);
+  todoTempArr.push(test7Todo);
+
+  todoTempArr.forEach((todo) => {
+    let prop = todo.getProperties();
     localStorage.setItem(`todo${prop.title}`, JSON.stringify(prop));
-  }
-  console.log(localStorage);
-} else {
-  console.log(localStorage);
-  todoArr.splice(0, todoArr.length - 1);
+  });
+
+  localStorage.setItem(`projects`, JSON.stringify(projectsArr));
+}
+
+function fillTodoArrWithLocalStorageTodos() {
   for (let i = 0; i < localStorage.length; i++) {
     if (localStorage.key(i).includes("todo")) {
       const todo = JSON.parse(localStorage.getItem(localStorage.key(i)));
@@ -107,18 +108,48 @@ if (localStorage.length === 0) {
   }
 }
 
-todoArr.forEach((todo) => {
-  // dom.addTodoToPage(todo);
-  if (todo.getProject() === "Inbox") {
-    dom.addTodoToPage(todo);
-  }
-});
+function fillProjectsArrWithLocalStorageProjects() {
+  projectsArr.splice(0, projectsArr.length);
 
-getProjects().forEach((project) => {
-  if (project !== "Inbox") {
-    dom.addProjectToPage(project);
+  let tempArr = JSON.parse(localStorage.getItem("projects"));
+
+  tempArr.forEach((item) => {
+    projectsArr.push(item);
+  });
+}
+
+function todosLoad() {
+  if (localStorage.length === 0) {
+    firstLoad();
   }
-});
+  fillTodoArrWithLocalStorageTodos();
+}
+
+function addExistingTodosToPage() {
+  todoArr.forEach((todo) => {
+    if (todo.getProject() === "Inbox") {
+      dom.addTodoToPage(todo);
+    }
+  });
+}
+
+function addExistingProjectsToPage(params) {
+  getProjects().forEach((project) => {
+    if (project !== "Inbox") {
+      dom.addProjectToPage(project);
+      dom.highlightInbox();
+    }
+  });
+}
+
+function initialPageLoad() {
+  todosLoad();
+  fillProjectsArrWithLocalStorageProjects();
+  addExistingTodosToPage();
+  addExistingProjectsToPage();
+}
+
+initialPageLoad();
 
 dom.addingTodoFormHandler(addNewTodoByUser, todoArr, projectsArr);
 dom.addTaskCompletionListener(setTaskCompletionById);
@@ -128,9 +159,3 @@ dom.setTodoDeleteObjectByIdFunc(deleteTodoObjById);
 dom.setTodoGetProjects(getProjects);
 dom.addingProjectFormHandler(addNewProjectByUser, projectsArr);
 dom.setTodoGetTodos(getTodos);
-
-// sketch -> WIP
-
-// const todo = JSON.parse(localStorage.getItem("1"));
-
-// console.log(todo);

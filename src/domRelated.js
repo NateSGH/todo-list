@@ -79,14 +79,16 @@ const dom = (() => {
     });
 
     deleteBtn.addEventListener("click", (event) => {
-      const todoObjById = todoGetTaskObjByIdFuncOnClick(
-        Number(event.target.parentNode.dataset.id)
-      );
+      if (confirm("Are you sure you want to delete this Todo?")) {
+        const todoObjById = todoGetTaskObjByIdFuncOnClick(
+          Number(event.target.parentNode.dataset.id)
+        );
 
-      deleteTodoOnPage(todoObjById);
-      todoDeleteTaskObjByIdFuncOnClick(
-        Number(event.target.parentNode.dataset.id)
-      );
+        deleteTodoOnPage(todoObjById);
+        todoDeleteTaskObjByIdFuncOnClick(
+          Number(event.target.parentNode.dataset.id)
+        );
+      }
     });
   }
 
@@ -258,13 +260,41 @@ const dom = (() => {
     projectDeleteIcon.classList.add("fas");
     projectDeleteIcon.classList.add("fa-times");
 
-    projectDiv.addEventListener("click", () => {
+    projectIcon.addEventListener(
+      "click",
+      highlightProjectAndAddProjectTodosToPage
+    );
+
+    projectP.addEventListener(
+      "click",
+      highlightProjectAndAddProjectTodosToPage
+    );
+
+    function highlightProjectAndAddProjectTodosToPage() {
       highlightProject(projectDiv);
       addProjectTodosByClickOnProject();
-    });
+    }
 
     projectDeleteIcon.addEventListener("click", () => {
-      todoDeleteProjectFuncOnClick(project);
+      if (
+        confirm(
+          "Are you sure you want to delete this Project? All todos from this project will be deleted too"
+        )
+      ) {
+        todoDeleteProjectFuncOnClick(project);
+        updateProjectSectionOnPage();
+        addInboxTodosToPage();
+
+        function updateProjectSectionOnPage() {
+          document.querySelector(".projects").innerHTML = "";
+
+          todoGetProjectsFunc().forEach((projectFromArr) => {
+            if (projectFromArr !== "Inbox") {
+              addProjectToPage(projectFromArr);
+            }
+          });
+        }
+      }
     });
 
     function highlightProject(currentProjectDiv) {
@@ -349,15 +379,20 @@ const dom = (() => {
     const inboxBtn = document.getElementById("inbox");
 
     inboxBtn.addEventListener("click", () => {
-      highlightSection(inboxBtn);
-      document.querySelector(".main-content").innerHTML = "";
-      todoGetTodosFunc().forEach((todo) => {
-        if (todo.getProject() === "Inbox") {
-          addTodoToPage(todo);
-        }
-      });
+      addInboxTodosToPage();
     });
   }
+
+  function addInboxTodosToPage() {
+    highlightSection(document.getElementById("inbox"));
+    document.querySelector(".main-content").innerHTML = "";
+    todoGetTodosFunc().forEach((todo) => {
+      if (todo.getProject() === "Inbox") {
+        addTodoToPage(todo);
+      }
+    });
+  }
+
   //today
   function todayBtnEventListener() {
     const todayBtn = document.getElementById("today");
@@ -557,7 +592,10 @@ const dom = (() => {
           project.style.backgroundColor = "transparent";
         });
       }
-      if (event.target.parentNode == document.querySelector(".projects")) {
+      if (
+        event.target.parentNode == document.querySelector(".projects") ||
+        targetParent.classList.contains("todo-project")
+      ) {
         document.querySelectorAll(".section").forEach((section) => {
           section.style.backgroundColor = "transparent";
         });

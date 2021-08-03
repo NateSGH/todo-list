@@ -118,6 +118,8 @@ function deleteProject(projectToDelete) {
   projectsArr.splice(index, 1);
   saveProjectsToLocalStorage();
   console.log(projectsArr);
+
+  function deleteTodosFromProject(project) {}
 }
 
 function getProjectIndex(projectToFind) {

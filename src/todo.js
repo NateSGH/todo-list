@@ -112,6 +112,22 @@ function addProjectToArr(project) {
   saveProjectsToLocalStorage();
 }
 
+function deleteProject(projectToDelete) {
+  const index = getProjectIndex(projectToDelete);
+
+  projectsArr.splice(index, 1);
+  saveProjectsToLocalStorage();
+  console.log(projectsArr);
+}
+
+function getProjectIndex(projectToFind) {
+  function checkProject(project) {
+    return project === projectToFind;
+  }
+
+  return projectsArr.findIndex(checkProject);
+}
+
 function getProjects() {
   return projectsArr;
 }
@@ -224,4 +240,5 @@ export {
   addNewProjectByUser,
   getProjects,
   getTodos,
+  deleteProject,
 };

@@ -6,6 +6,7 @@
   --btn-bg-color: #ffd6ba;
   --font-color: #fff;
   --header-sections-left-margin: 30px;
+  --inbox-top-thisweek-bottom-margin: 15px;
   --sections-icons-color: #555b6e;
   --form-margin: 10px;
   --btn-color: rgba(90, 117, 115, 0.8);
@@ -18,13 +19,17 @@ body {
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-columns: 30vw 70vw;
+  grid-template-columns: 20vw 80vw;
   grid-template-rows: 7vh 93vh;
   grid-template-areas:
     "header header"
     "sections content";
   overflow: hidden;
   margin: 0;
+}
+
+.fas {
+  color: var(--sections-icons-color);
 }
 
 header {
@@ -42,6 +47,16 @@ h1 {
   margin: 0 0 0 var(--header-sections-left-margin);
 }
 
+.fa-tasks,
+.fa-plus {
+  color: var(--font-color);
+}
+
+.fa-plus {
+  margin-right: 20px;
+  font-size: 20px;
+}
+
 .sections-panel {
   grid-area: sections;
   display: flex;
@@ -51,24 +66,28 @@ h1 {
 
 button {
   font-family: inherit;
-  font-size: 25px;
-  font-weight: 500;
   border: none;
   background: none;
   cursor: pointer;
-  padding: 25px;
   text-align: left;
 }
 
 .section {
+  font-size: 20px;
+  font-weight: 500;
+  padding: 15px 0px;
   padding-left: var(--header-sections-left-margin);
 }
 
-.fa-inbox,
-.fa-calendar-day,
-.fa-calendar-week,
-.fa-project-diagram {
-  color: var(--sections-icons-color);
+.section#inbox {
+  margin-top: var(--inbox-top-thisweek-bottom-margin);
+}
+.section#this-week {
+  margin-bottom: var(--inbox-top-thisweek-bottom-margin);
+}
+
+.section#projects {
+  cursor: initial;
 }
 
 .project-container {
@@ -77,18 +96,40 @@ button {
   flex-direction: column;
 }
 
+.section,
+.todo-project {
+  margin: 0px 20px 0 20px;
+  border-radius: 5px;
+}
+
 .todo-project {
   font-family: inherit;
-  font-size: 22px;
+  font-size: 19px;
   color: var(--font-dark);
-  padding: 15px;
-  text-align: right;
+  margin-left: 70px;
+  padding: 5px 20px;
+  text-align: left;
   cursor: pointer;
-  margin: 0;
+  display: grid;
+  grid-template-columns: 5% 90% 5%;
+  align-items: center;
+}
+
+.todo-project .fa-circle {
+  font-size: 8px;
+}
+
+.todo-project .fa-times {
+  font-size: 14px;
 }
 
 .todo-project:hover {
   background-color: rgba(108, 138, 136, 0.3);
+}
+
+.project-title {
+  padding: 5px;
+  margin: 5px;
 }
 
 .main-content {
@@ -123,11 +164,6 @@ button {
   border: none;
   width: auto;
   height: auto;
-}
-
-.fa-plus {
-  margin-right: 20px;
-  font-size: 20px;
 }
 
 #add-project,

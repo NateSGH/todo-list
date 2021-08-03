@@ -10,6 +10,7 @@ const dom = (() => {
   let todoDeleteTaskObjByIdFuncOnClick = "";
   let todoGetProjectsFunc = "";
   let todoGetTodosFunc = "";
+  let todoDeleteProjectFuncOnClick = "";
 
   // create todo
   function addTodoToPage(obj) {
@@ -122,6 +123,10 @@ const dom = (() => {
 
   function setTodoGetTodos(functionOnClick) {
     todoGetTodosFunc = functionOnClick;
+  }
+
+  function setTodoDeleteProject(functionOnClick) {
+    todoDeleteProjectFuncOnClick = functionOnClick;
   }
 
   function showTaskDetails(obj) {
@@ -238,25 +243,51 @@ const dom = (() => {
   function addProjectToPage(project) {
     const projectsDiv = document.querySelector(".projects");
 
+    const projectDiv = document.createElement("div");
+    projectDiv.classList.add("todo-project");
+
+    const projectIcon = document.createElement("i");
+    projectIcon.classList.add("fas");
+    projectIcon.classList.add("fa-circle");
+
     const projectP = document.createElement("p");
-    projectP.classList.add("todo-project");
+    projectP.classList.add("project-title");
     projectP.innerText = project;
 
-    projectP.addEventListener("click", () => {
-      document.querySelectorAll(".todo-project").forEach((project) => {
-        project.style.backgroundColor = "transparent";
+    const projectDeleteIcon = document.createElement("i");
+    projectDeleteIcon.classList.add("fas");
+    projectDeleteIcon.classList.add("fa-times");
+
+    projectDiv.addEventListener("click", () => {
+      highlightProject(projectDiv);
+      addProjectTodosByClickOnProject();
+    });
+
+    projectDeleteIcon.addEventListener("click", () => {
+      todoDeleteProjectFuncOnClick(project);
+    });
+
+    function highlightProject(currentProjectDiv) {
+      document.querySelectorAll(".todo-project").forEach((projectDiv) => {
+        projectDiv.style.backgroundColor = "transparent";
       });
 
-      projectP.style.backgroundColor = "rgba(108, 138, 136, 0.3)";
+      currentProjectDiv.style.backgroundColor = "rgba(108, 138, 136, 0.2)";
+    }
+
+    function addProjectTodosByClickOnProject() {
       document.querySelector(".main-content").innerHTML = "";
       todoGetTodosFunc().forEach((todo) => {
         if (todo.getProject() === projectP.innerText) {
           addTodoToPage(todo);
         }
       });
-    });
+    }
 
-    projectsDiv.appendChild(projectP);
+    projectDiv.appendChild(projectIcon);
+    projectDiv.appendChild(projectP);
+    projectDiv.appendChild(projectDeleteIcon);
+    projectsDiv.appendChild(projectDiv);
   }
 
   function createProjectForm() {
@@ -386,13 +417,13 @@ const dom = (() => {
   function setPriorityOnPage(priority, iconEl) {
     switch (priority) {
       case "low":
-        iconEl.style.color = "green";
+        iconEl.style.color = "#60914E"; //#4E9160
         break;
       case "medium":
-        iconEl.style.color = "orange";
+        iconEl.style.color = "#FF9C44";
         break;
       case "high":
-        iconEl.style.color = "red";
+        iconEl.style.color = "#FF4B3D";
         break;
 
       default:
@@ -516,7 +547,12 @@ const dom = (() => {
   document
     .querySelector(".sections-panel")
     .addEventListener("click", (event) => {
-      if (event.target.parentNode != document.querySelector(".projects")) {
+      const targetParent = event.target.parentNode;
+
+      if (
+        !targetParent.classList.contains("todo-project") &&
+        targetParent != document.querySelector(".projects")
+      ) {
         document.querySelectorAll(".todo-project").forEach((project) => {
           project.style.backgroundColor = "transparent";
         });
@@ -544,6 +580,7 @@ const dom = (() => {
     setTodoGetProjects,
     setTodoGetTodos,
     highlightInbox,
+    setTodoDeleteProject,
   };
 })();
 

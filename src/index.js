@@ -11,6 +11,7 @@ import {
   addNewProjectByUser,
   getProjects,
   getTodos,
+  deleteProject,
 } from "./todo.js";
 import { dom } from "./domRelated.js";
 import { format } from "date-fns";
@@ -159,3 +160,4 @@ dom.setTodoDeleteObjectByIdFunc(deleteTodoObjById);
 dom.setTodoGetProjects(getProjects);
 dom.addingProjectFormHandler(addNewProjectByUser, projectsArr);
 dom.setTodoGetTodos(getTodos);
+dom.setTodoDeleteProject(deleteProject);

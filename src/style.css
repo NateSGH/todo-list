@@ -8,6 +8,7 @@
   --header-sections-left-margin: 30px;
   --inbox-top-thisweek-bottom-margin: 15px;
   --sections-icons-color: #555b6e;
+  --icons-darker-color: #515668;
   --form-margin: 10px;
   --btn-color: rgba(90, 117, 115, 0.8);
   --btn-hover-color: rgba(90, 117, 115, 0.9);
@@ -136,13 +137,17 @@ button {
   grid-area: content;
   display: flex;
   flex-direction: column;
+  padding: 25px 50px;
 }
 
 .todo-content {
   display: grid;
   grid-template-columns: auto 1fr auto auto auto;
-  margin: 15px;
+  margin: 7px;
   align-items: center;
+  box-shadow: 3px 3px 2px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  background-color: rgba(226, 225, 225, 0.3);
 }
 
 .todo-icon {
@@ -154,8 +159,25 @@ button {
   cursor: pointer;
 }
 
+.fa-flag {
+  cursor: initial;
+  margin-right: 40px;
+}
+
 .todo-title {
   margin-left: 5px;
+}
+
+.fa-pencil-alt:hover,
+.fa-trash-alt:hover {
+  color: #fff;
+  /* color: var(--icons-darker-color); */
+}
+
+.fa-pencil-alt:active,
+.fa-trash-alt:active {
+  color: var(--icons-darker-color);
+  transform: scale(0.95);
 }
 
 #add-task {

@@ -20,6 +20,9 @@ const dom = (() => {
 
     const checkbox = document.createElement("i");
     checkbox.classList.add("far");
+    console.log(obj.getTitle());
+    console.log(obj.getProperties());
+    console.log(obj.getCompletion());
     if (obj.getCompletion() === false) {
       checkbox.classList.add("fa-square");
     } else {
@@ -43,6 +46,7 @@ const dom = (() => {
     priority.classList.add("todo-icon");
 
     setPriorityOnPage(obj.getPriority(), priority);
+    styleTodoCompletitionOnPage(checkbox, title);
 
     const deleteBtn = document.createElement("i");
     deleteBtn.classList.add("fas");
@@ -96,6 +100,10 @@ const dom = (() => {
     checkboxEl.classList.toggle("fa-square");
     checkboxEl.classList.toggle("fa-check-square");
 
+    styleTodoCompletitionOnPage(checkboxEl, titleEl);
+  }
+
+  function styleTodoCompletitionOnPage(checkboxEl, titleEl) {
     if (checkboxEl.classList.contains("fa-check-square")) {
       titleEl.style.textDecoration = "line-through";
     } else {

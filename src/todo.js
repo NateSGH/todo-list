@@ -153,11 +153,16 @@ function getTodoIndexById(idNum) {
 
 function setTaskCompletionById(idNum) {
   const index = getTodoIndexById(idNum);
-  if (index) {
+  console.log(index);
+  if (index >= 0) {
     const currentCompletion = todoArr[index].getCompletion();
 
     todoArr[index].setCompletion(!currentCompletion);
     console.log(todoArr[index].getProperties());
+
+    saveTodoToLocalStorage(todoArr[index]);
+    console.log(todoArr[index].getProperties());
+    console.log(localStorage.getItem(todoArr[index].getTitle()));
   }
 }
 

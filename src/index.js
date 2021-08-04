@@ -95,6 +95,7 @@ function fillTodoArrWithLocalStorageTodos() {
   for (let i = 0; i < localStorage.length; i++) {
     if (localStorage.key(i).includes("todo")) {
       const todo = JSON.parse(localStorage.getItem(localStorage.key(i)));
+      console.log(todo);
 
       todoArr.push(
         todoFactory(
@@ -105,6 +106,8 @@ function fillTodoArrWithLocalStorageTodos() {
           todo.project
         )
       );
+
+      console.log(todoArr[todoArr.length - 1].getProperties());
     }
   }
 }

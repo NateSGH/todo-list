@@ -29,7 +29,8 @@ body {
   margin: 0;
 }
 
-.fas {
+.fas,
+.far {
   color: var(--sections-icons-color);
 }
 
@@ -169,13 +170,15 @@ button {
 }
 
 .fa-pencil-alt:hover,
-.fa-trash-alt:hover {
-  color: #fff;
-  /* color: var(--icons-darker-color); */
+.fa-trash-alt:hover,
+.fa-square:hover {
+  color: var(--icons-darker-color);
+  transform: scale(1.05);
 }
 
 .fa-pencil-alt:active,
-.fa-trash-alt:active {
+.fa-trash-alt:active,
+.fa-square:active {
   color: var(--icons-darker-color);
   transform: scale(0.95);
 }

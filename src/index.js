@@ -12,6 +12,8 @@ import {
   getProjects,
   getTodos,
   deleteProject,
+  addProjectToArr,
+  addTodoToArr,
 } from "./todo.js";
 import { dom } from "./domRelated.js";
 import { format } from "date-fns";
@@ -95,19 +97,17 @@ function fillTodoArrWithLocalStorageTodos() {
   for (let i = 0; i < localStorage.length; i++) {
     if (localStorage.key(i).includes("todo")) {
       const todo = JSON.parse(localStorage.getItem(localStorage.key(i)));
-      console.log(todo);
 
-      todoArr.push(
-        todoFactory(
-          todo.title,
-          todo.description,
-          todo.dueDate,
-          todo.priority,
-          todo.project
-        )
+      const todoToPush = todoFactory(
+        todo.title,
+        todo.description,
+        todo.dueDate,
+        todo.priority,
+        todo.project
       );
+      todoToPush.setCompletion(todo.completed);
 
-      console.log(todoArr[todoArr.length - 1].getProperties());
+      addTodoToArr(todoToPush);
     }
   }
 }
@@ -118,7 +118,7 @@ function fillProjectsArrWithLocalStorageProjects() {
   let tempArr = JSON.parse(localStorage.getItem("projects"));
 
   tempArr.forEach((item) => {
-    projectsArr.push(item);
+    addProjectToArr(item);
   });
 }
 

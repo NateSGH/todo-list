@@ -79,7 +79,6 @@ function addNewTodoByUser(formTodoObj, todoArr) {
 
   // add to storage
   saveTodoToLocalStorage(todoItem);
-  console.log(formTodoObj);
   return true;
 }
 
@@ -103,13 +102,12 @@ function addNewProjectByUser(formProject) {
   }
   // if not exists add to array
   addProjectToArr(formProject);
+  saveProjectsToLocalStorage();
   return true;
 }
 
 function addProjectToArr(project) {
   projectsArr.push(project);
-  console.log(projectsArr);
-  saveProjectsToLocalStorage();
 }
 
 function deleteProject(projectToDelete) {
@@ -117,7 +115,6 @@ function deleteProject(projectToDelete) {
 
   projectsArr.splice(index, 1);
   saveProjectsToLocalStorage();
-  console.log(projectsArr);
 
   function deleteTodosFromProject(project) {}
 }
@@ -140,7 +137,6 @@ function getTodos() {
 
 function addTodoToArr(todoObj) {
   todoArr.push(todoObj);
-  console.log(todoArr);
 }
 
 function getTodoIndexById(idNum) {
@@ -153,16 +149,12 @@ function getTodoIndexById(idNum) {
 
 function setTaskCompletionById(idNum) {
   const index = getTodoIndexById(idNum);
-  console.log(index);
   if (index >= 0) {
     const currentCompletion = todoArr[index].getCompletion();
 
     todoArr[index].setCompletion(!currentCompletion);
-    console.log(todoArr[index].getProperties());
 
     saveTodoToLocalStorage(todoArr[index]);
-    console.log(todoArr[index].getProperties());
-    console.log(localStorage.getItem(todoArr[index].getTitle()));
   }
 }
 
@@ -174,7 +166,6 @@ function getTodoObjectById(idNum) {
 
 function editTodoObjById(obj) {
   const index = getTodoIndexById(obj.idNum);
-  console.log(index);
 
   const oldTodoTitle = todoArr[index].getTitle();
 
@@ -187,8 +178,6 @@ function editTodoObjById(obj) {
   );
 
   replaceTodoInLocalStorage(oldTodoTitle, todoArr[index]);
-
-  console.log(todoArr[index].getProperties());
 }
 
 function deleteTodoObjById(idNum) {
@@ -197,9 +186,6 @@ function deleteTodoObjById(idNum) {
   deleteTodoFromLocalStorage(todoArr[index].getTitle());
 
   todoArr.splice(index, 1);
-  todoArr.forEach((todoArrObj) => {
-    console.log(todoArrObj.getProperties());
-  });
 }
 
 const counterCreator = () => {
@@ -248,4 +234,6 @@ export {
   getProjects,
   getTodos,
   deleteProject,
+  addProjectToArr,
+  addTodoToArr,
 };

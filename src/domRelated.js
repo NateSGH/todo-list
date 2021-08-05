@@ -20,9 +20,7 @@ const dom = (() => {
 
     const checkbox = document.createElement("i");
     checkbox.classList.add("far");
-    console.log(obj.getTitle());
-    console.log(obj.getProperties());
-    console.log(obj.getCompletion());
+
     if (obj.getCompletion() === false) {
       checkbox.classList.add("fa-square");
     } else {

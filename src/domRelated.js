@@ -253,6 +253,7 @@ const dom = (() => {
 
     const projectDiv = document.createElement("div");
     projectDiv.classList.add("todo-project");
+    projectDiv.classList.add("project");
 
     const projectIcon = document.createElement("i");
     projectIcon.classList.add("fas");
@@ -565,7 +566,19 @@ const dom = (() => {
 
         if (todoFormHandler(todoObj, todoArr)) {
           removeForm();
-          addTodoToPage(todoArr[todoArr.length - 1]);
+
+          const projects = document.querySelectorAll(".project");
+          projects.forEach((project) => {
+            if (
+              (project.style.backgroundColor === "rgba(108, 138, 136, 0.3)" &&
+                project.innerText === newTodoForm.elements.project.value) ||
+              (project.style.backgroundColor === "rgba(108, 138, 136, 0.2)" &&
+                project.querySelector(".project-title").innerText ===
+                  newTodoForm.elements.project.value)
+            ) {
+              addTodoToPage(todoArr[todoArr.length - 1]);
+            }
+          });
         }
       });
     }

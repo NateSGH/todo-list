@@ -116,7 +116,20 @@ function deleteProject(projectToDelete) {
   projectsArr.splice(index, 1);
   saveProjectsToLocalStorage();
 
-  function deleteTodosFromProject(project) {}
+  deleteTodosFromProject(projectToDelete);
+
+  function deleteTodosFromProject(project) {
+    const filteredTodos = todoArr.filter(getTodosWithProject);
+
+    filteredTodos.forEach((todo) => {
+      todoArr.splice(todoArr.indexOf(todo), 1);
+      deleteTodoFromLocalStorage(todo.getTitle());
+    });
+
+    function getTodosWithProject(todo) {
+      return todo.getProject() === project;
+    }
+  }
 }
 
 function getProjectIndex(projectToFind) {

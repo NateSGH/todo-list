@@ -289,8 +289,8 @@ const dom = (() => {
         )
       ) {
         todoDeleteProjectFuncOnClick(project);
-        updateProjectSectionOnPage();
         addInboxTodosToPage();
+        updateProjectSectionOnPage();
 
         function updateProjectSectionOnPage() {
           document.querySelector(".projects").innerHTML = "";
@@ -601,6 +601,8 @@ const dom = (() => {
   document
     .querySelector(".sections-panel")
     .addEventListener("click", (event) => {
+      console.log(event);
+      console.log(event.target);
       const targetParent = event.target.parentNode;
 
       if (
@@ -612,8 +614,9 @@ const dom = (() => {
         });
       }
       if (
-        event.target.parentNode == document.querySelector(".projects") ||
-        targetParent.classList.contains("todo-project")
+        (targetParent == document.querySelector(".projects") ||
+          targetParent.classList.contains("todo-project")) &&
+        !event.target.classList.contains("fa-times")
       ) {
         document.querySelectorAll(".section").forEach((section) => {
           section.style.backgroundColor = "transparent";

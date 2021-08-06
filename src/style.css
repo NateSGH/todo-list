@@ -9,7 +9,7 @@
   --inbox-top-thisweek-bottom-margin: 15px;
   --sections-icons-color: #555b6e;
   --icons-darker-color: #515668;
-  --form-margin: 10px;
+  --form-margin: 20px;
   --btn-color: rgba(90, 117, 115, 0.8);
   --btn-hover-color: rgba(90, 117, 115, 0.9);
   --font-dark: rgb(55, 71, 70);
@@ -17,8 +17,8 @@
 
 body {
   font-family: "Nanum Myeongjo", serif;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   display: grid;
   grid-template-columns: 20vw 80vw;
   grid-template-rows: 7vh 93vh;
@@ -27,6 +27,26 @@ body {
     "sections content";
   overflow: hidden;
   margin: 0;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 1px solid var(--sections-icons-color);
+}
+
+input,
+textarea,
+select {
+  border: none;
+  border: 1px solid var(--sections-icons-color);
+  border-radius: 2px;
+  background-color: #fff;
+}
+
+input,
+select {
+  height: 22px;
 }
 
 .fas,
@@ -59,6 +79,14 @@ h1 {
   font-size: 20px;
 }
 
+.fa-plus:hover {
+  transform: scale(1.05);
+}
+
+.fa-plus:active {
+  transform: scale(0.95);
+}
+
 .sections-panel {
   grid-area: sections;
   display: flex;
@@ -72,6 +100,10 @@ button {
   background: none;
   cursor: pointer;
   text-align: left;
+}
+
+.section-icon {
+  margin-right: 10px;
 }
 
 .section {
@@ -138,7 +170,7 @@ button {
   grid-area: content;
   display: flex;
   flex-direction: column;
-  padding: 25px 50px;
+  padding: 30px 55px;
 }
 
 .todo-content {
@@ -252,6 +284,7 @@ button {
   grid-template-areas:
     "heading close"
     "form form";
+  padding: 17px;
 }
 
 .form-wrapper h3,
@@ -267,7 +300,6 @@ button {
   justify-self: end;
   align-self: start;
   padding: 0;
-  margin: 5px var(--form-margin) 0 0;
 }
 
 #close-form i,
@@ -299,7 +331,7 @@ button {
     "description priority"
     "description project"
     ". submit";
-  grid-gap: 10px;
+  grid-row-gap: 10px;
 }
 
 #add-task-form label,
@@ -388,18 +420,19 @@ textarea {
   top: 30%;
   left: 50%;
   transform: translateX(-50%);
+  padding: 10px;
 }
 
 #close-details {
   justify-self: end;
   align-self: start;
   padding: 0;
-  margin: 5px var(--form-margin) 0 0;
+  margin: 15px 15px 0 0;
 }
 
 .details-wrapper h3,
 .details-wrapper p {
-  margin: 0 0 0 10px;
+  margin: 0 0 0 25px;
 }
 
 @keyframes fade-in {
@@ -424,7 +457,14 @@ textarea {
 
 @media (max-width: 1100px) {
   .form-wrapper,
-  .project-form-wrapper {
+  .project-form-wrapper,
+  .details-wrapper {
     width: 60vw;
+  }
+}
+
+@media (max-width: 1300px) {
+  body {
+    grid-template-columns: minmax(260px, 30vw) minmax(480px, 70vw);
   }
 }

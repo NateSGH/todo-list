@@ -16,57 +16,57 @@ import {
   addTodoToArr,
 } from "./todo.js";
 import { dom } from "./domRelated.js";
-import { format } from "date-fns";
+import { format, addDays } from "date-fns";
 
 const test1Todo = todoFactory(
-  "Test 1 TODO",
-  "Todo to test",
-  "01-08-2021",
+  "Go for a 30min walk",
+  "Default todo",
+  format(addDays(new Date(), 5), "dd-MM-yyyy"),
   "medium",
   "Inbox"
 );
 const test2Todo = todoFactory(
-  "Test 2 TODO",
-  "Todo to test",
-  "20-08-2021",
+  "Pick a movie for movie night",
+  "Default todo",
+  format(addDays(new Date(), 3), "dd-MM-yyyy"),
   "high",
   "Inbox"
 );
 const test3Todo = todoFactory(
-  "Test 3 TODO",
-  "Todo to test",
-  "01-08-2021",
+  "Cook diner",
+  "Default todo",
+  format(addDays(new Date(), 10), "dd-MM-yyyy"),
   "low",
   "Test"
 );
 
 const test4Todo = todoFactory(
-  "Test 4 TODO",
-  "Todo to test",
-  "05-08-2021",
+  "Check email",
+  "Default todo",
+  format(new Date(), "dd-MM-yyyy"),
   "medium",
   "Secret Project"
 );
 
 const test5Todo = todoFactory(
-  "Test 5 TODO",
-  "Todo to test",
-  "08-08-2021",
+  "Buy milk",
+  "Default todo",
+  format(new Date(), "dd-MM-yyyy"),
   "low",
   "Test"
 );
 
 const test6Todo = todoFactory(
-  "Test 6 TODO",
-  "Todo to test",
-  "08-08-2021",
+  "Clean the house",
+  "Default todo",
+  format(addDays(new Date(), 1), "dd-MM-yyyy"),
   "high",
   "Wow"
 );
 
 const test7Todo = todoFactory(
-  "Test 7 TODO",
-  "Todo to test",
+  "Meet with Sam",
+  "Default todo",
   format(new Date(), "dd-MM-yyyy"),
   "low",
   "Inbox"

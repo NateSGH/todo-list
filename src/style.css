@@ -15,10 +15,14 @@
   --font-dark: rgb(55, 71, 70);
 }
 
+html {
+  height: 100%;
+}
+
 body {
   font-family: "Nanum Myeongjo", serif;
-  width: 100vw;
   height: 100vh;
+  width: 100vw;
   display: grid;
   grid-template-columns: 20vw 80vw;
   grid-template-rows: 7vh 93vh;
@@ -92,6 +96,7 @@ h1 {
   display: flex;
   flex-direction: column;
   background-color: var(--sections-bg-color);
+  overflow: hidden;
 }
 
 button {
@@ -171,6 +176,7 @@ button {
   display: flex;
   flex-direction: column;
   padding: 30px 55px;
+  overflow: hidden;
 }
 
 .todo-content {
@@ -465,6 +471,119 @@ textarea {
 
 @media (max-width: 1300px) {
   body {
-    grid-template-columns: minmax(260px, 30vw) minmax(480px, 70vw);
+    grid-template-columns: minmax(170px, 30vw) minmax(350px, 70vw);
+  }
+}
+
+@media (max-width: 750px) {
+  .section {
+    font-size: 19px;
+    padding: 15px 0px;
+    padding-left: 15px;
+  }
+
+  .section,
+  .todo-project {
+    margin: 0px 15px 0 15px;
+  }
+
+  .todo-project {
+    font-size: 17px;
+    margin-left: 25px;
+  }
+}
+
+@media (max-width: 670px) {
+  #add-task-form {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(7, 1fr);
+    grid-template-areas:
+      "title"
+      "duedate"
+      "description"
+      "description"
+      "priority"
+      "project"
+      "submit";
+  }
+}
+@media (max-height: 1000px) {
+  .form-wrapper,
+  .project-form-wrapper {
+    top: 17%;
+  }
+}
+
+@media (max-width: 450px) {
+  body {
+    grid-template-columns: minmax(125px, 30vw) minmax(200px, 70vw);
+  }
+
+  h1 {
+    font-size: 20px;
+    font-weight: lighter;
+    margin: 0 0 0 20px;
+  }
+
+  .fa-plus {
+    margin-right: 20px;
+    font-size: 20px;
+  }
+
+  .section-icon {
+    margin-right: 4px;
+    font-size: 12px;
+  }
+
+  .section {
+    font-size: 15px;
+    padding: 5px 5px;
+  }
+
+  .section,
+  .todo-project {
+    margin: 0px 10px 0 10px;
+  }
+
+  .todo-project {
+    font-size: 14px;
+    margin-left: 20px;
+    padding: 5px 10px;
+  }
+
+  .todo-project .fa-circle {
+    font-size: 5px;
+  }
+
+  .todo-project .fa-times {
+    font-size: 10px;
+  }
+
+  #add-project {
+    font-size: 13px;
+    text-align: center;
+    width: fit-content;
+    height: fit-content;
+    align-self: flex-end;
+    padding: 7px;
+    margin: 10px;
+  }
+
+  .main-content {
+    padding: 10px 15px;
+  }
+
+  .todo-icon {
+    font-size: 14px;
+    margin: 5px;
+  }
+
+  .fa-flag {
+    margin-right: 20px;
+  }
+
+  .todo-title {
+    font-size: 15px;
+    margin-left: 5px;
   }
 }

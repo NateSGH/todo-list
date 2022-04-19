@@ -1,6 +1,6 @@
 # ToDo List
 
-TODO List app using HTML, CSS and Vanilla JS, webpack.
+TODO List app using HTML, CSS and JavaScript, webpack.
 
 - Add new task with title and descripton, due date, priority
 - Expand task to see details
@@ -18,7 +18,7 @@ This project is a part of [The Odin Project](https://www.theodinproject.com/)'s 
 
 - HTML
 - CSS
-- Vanilla JS
+- JavaScript
 - [date-fns](https://github.com/date-fns/date-fns)
 - Web Storage API localStorage
 
